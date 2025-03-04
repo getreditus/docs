@@ -39,7 +39,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": { "type": "string" }
+                    "error": {
+                      "type": "string",
+                      "default": "Referral already exists"
+                    }
                   }
                 }
               }
@@ -52,7 +55,10 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": { "type": "string" }
+                    "error": {
+                      "type": "string",
+                      "default": "Invalid request"
+                    }
                   }
                 }
               }
@@ -68,11 +74,24 @@
       "TrackingV2Request": {
         "type": "object",
         "properties": {
-          "email": { "type": "string" },
-          "affiliate_slug": { "type": "string" },
-          "uid": { "type": "string" },
-          "gr_id": { "type": "string" }
-        }
+          "affiliate_slug": {
+            "type": "string",
+            "description": "URL parameter of the affiliate (i.e. https://company.com?red=john -> john)"
+          },
+          "email": {
+            "type": "string",
+            "description": "**required** if uid is not set - Email of the referral"
+          },
+          "uid": {
+            "type": "string",
+            "description": "**required** if email is not set - Your internal ID of the user/customer"
+          },
+          "gr_id": {
+            "type": "string",
+            "description": "Cookie set by the tracking script in the referral's browser. Used to match the exact click that converted."
+          }
+        },
+        "required": ["affiliate_slug"]
       },
       "TrackingV2Response": {
         "type": "object",

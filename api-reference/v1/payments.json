@@ -67,12 +67,38 @@
       "PaymentRequest": {
         "type": "object",
         "properties": {
-          "referral_email": { "type": "string" },
-          "amount": { "type": "integer" },
-          "currency": { "type": "string" },
-          "idempotency_key": { "type": "string" },
-          "subscription_id": { "type": "string" },
-          "interval": { "type": "string" }
+          "referral_email": {
+            "type": "string",
+            "description": "**required** if `referral_id` not set - Email of the referral"
+          },
+          "referral_id": {
+            "type": "string",
+            "description": "**required** if `referral_email` not set - Reditus id of the referral"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Payment amount (in cents)"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Payment currency - (lowercase, i.e. **usd**)"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "description": "A unique string to identify this payment. Used to prevent double payments."
+          },
+          "subscription_id": {
+            "type": "string",
+            "description": "Should be the id of the subscription on your side. Used to associate subsequent payments to this subscription."
+          },
+          "interval": {
+            "type": "string",
+            "description": "Subscription interval ('month'/'year')"
+          },
+          "interval_count": {
+            "type": "integer",
+            "description": "Number of intervals the payment is made (default: 1)"
+          }
         },
         "required": ["idempotency_key", "amount", "currency"]
       },
