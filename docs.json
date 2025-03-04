@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "maple",
+  "name": "Reditus docs",
   "colors": {
     "primary": "#475DC4",
     "light": "#475DC4",
@@ -15,36 +15,59 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart", "development"]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
+            "pages": ["introduction"]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API Docs",
         "groups": [
           {
             "group": "API Documentation",
             "pages": ["api-reference/introduction"]
           },
           {
-            "group": "Endpoint Examples",
+            "group": "Affiliates",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/v1/partners/index",
+              "api-reference/v1/partners/show"
             ]
+          },
+          {
+            "group": "Partnerships",
+            "pages": [
+              "api-reference/v1/partnerships/index",
+              "api-reference/v1/partnerships/show"
+            ]
+          },
+          {
+            "group": "Referrals",
+            "pages": [
+              "api-reference/v1/referrals/index",
+              "api-reference/v1/referrals/show"
+            ]
+          },
+          {
+            "group": "Payments",
+            "pages": [
+              "api-reference/v1/payments/create",
+              "api-reference/v1/payments/show"
+            ]
+          },
+          {
+            "group": "Tracking V2",
+            "pages": ["api-reference/v2/tracking/conversion"]
+          },
+          {
+            "group": "Subscriptions",
+            "pages": [
+              "api-reference/v1/subscriptions/show",
+              "api-reference/v1/subscriptions/destroy"
+            ]
+          },
+          {
+            "group": "Tracking V1 (Deprecated)",
+            "pages": ["api-reference/v1/tracking/conversion"]
           }
         ]
       }
@@ -52,19 +75,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
+          "anchor": "Guides",
+          "href": "https://docs.getreditus.com",
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "API Docs",
+          "href": "https://docs.getreditus.com/api-reference",
+          "icon": "file-doc"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Help Center",
+          "href": "https://help.getreditus.com",
+          "icon": "square-question"
         }
       ]
     }
@@ -77,7 +100,7 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:info@getreditus.com"
       }
     ],
     "primary": {
@@ -89,7 +112,15 @@
   "footer": {
     "socials": {
       "github": "https://github.com/getreditus",
-      "linkedin": "https://www.linkedin.com/company/43297312"
+      "linkedin": "https://www.linkedin.com/company/getreditus"
+    }
+  },
+  "api": {
+    "mdx": {
+      "server": "https://api.getreditus.com",
+      "auth": {
+        "method": "bearer"
+      }
     }
   }
 }

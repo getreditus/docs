@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Reditus API",
-    "description": "This is the public API documentation for Reditus. All our API calls use JSON format.",
+    "title": "Reditus API - Partners",
+    "description": "API specification for managing partners in Reditus.",
     "version": "1.0.0"
   },
   "servers": [
@@ -14,16 +14,24 @@
     "/v1/partners": {
       "get": {
         "summary": "List Partners",
-        "description": "Retrieve paginated list of partners.",
+        "description": "Retrieve a paginated list of partners.",
         "parameters": [
-          {"name": "name_eq", "in": "query", "schema": {"type": "string"}},
-          {"name": "email_eq", "in": "query", "schema": {"type": "string"}},
-          {"name": "paypal_email_eq", "in": "query", "schema": {"type": "string"}},
-          {"name": "page", "in": "query", "schema": {"type": "integer"}},
-          {"name": "per_page", "in": "query", "schema": {"type": "integer", "maximum": 50}}
+          { "name": "name_eq", "in": "query", "schema": { "type": "string" } },
+          { "name": "email_eq", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "paypal_email_eq",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": { "type": "integer", "maximum": 50 }
+          }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful response",
             "content": {
               "application/json": {
@@ -34,14 +42,20 @@
             }
           }
         },
-        "security": [{"BearerAuth": []}]
+        "security": [{ "BearerAuth": [] }]
       }
     },
     "/v1/partners/{id}": {
       "get": {
         "summary": "Get Partner",
+        "description": "Show data for a partner",
         "parameters": [
-          {"name": "id", "in": "path", "required": true, "schema": {"type": "string"}}
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
         ],
         "responses": {
           "200": {
@@ -55,7 +69,7 @@
             }
           }
         },
-        "security": [{"BearerAuth": []}]
+        "security": [{ "BearerAuth": [] }]
       }
     }
   },
@@ -74,9 +88,9 @@
               "pagination": {
                 "type": "object",
                 "properties": {
-                  "page": {"type": "integer"},
-                  "per_page": {"type": "integer"},
-                  "has_more": {"type": "boolean"}
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
                 }
               }
             }
@@ -92,15 +106,15 @@
       "Partner": {
         "type": "object",
         "properties": {
-          "id": {"type": "string"},
-          "type": {"type": "string"},
+          "id": { "type": "string" },
+          "type": { "type": "string" },
           "attributes": {
             "type": "object",
             "properties": {
-              "name": {"type": "string"},
-              "paypal_email": {"type": "string"},
-              "created_at": {"type": "integer"},
-              "updated_at": {"type": "integer"}
+              "name": { "type": "string" },
+              "paypal_email": { "type": "string" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" }
             }
           }
         }

@@ -1,0 +1,153 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Partnerships",
+    "description": "API specification for managing partnerships in Reditus.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/partnerships": {
+      "get": {
+        "summary": "List Partnerships",
+        "description": "Retrieve a paginated list of partnerships.",
+        "parameters": [
+          { "name": "state_eq", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "created_at_lt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "created_at_gt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": { "type": "integer", "maximum": 50 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartnershipListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/partnerships/{id}": {
+      "get": {
+        "summary": "Get Partnership",
+        "description": "Show data for a partnership.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartnershipResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PartnershipListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Partnership" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "PartnershipResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/Partnership" }
+        }
+      },
+      "Partnership": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "state": { "type": "string" },
+              "created_by": { "type": "string" },
+              "state_set_at": { "type": "integer" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" },
+              "referral_link": { "type": "string" }
+            }
+          },
+          "relationships": {
+            "type": "object",
+            "properties": {
+              "partner": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "type": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

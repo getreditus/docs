@@ -1,0 +1,146 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Referrals",
+    "description": "API specification for managing referrals in Reditus.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/referrals": {
+      "get": {
+        "summary": "List Referrals",
+        "description": "Retrieve a paginated list of referrals.",
+        "parameters": [
+          { "name": "state_eq", "in": "query", "schema": { "type": "string" } },
+          { "name": "email_eq", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "created_at_lt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "created_at_gt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "state_set_at_lt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "state_set_at_gt",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": { "type": "integer", "maximum": 50 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/referrals/{id}": {
+      "get": {
+        "summary": "Get Referral",
+        "description": "Show data for a referral.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReferralListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Referral" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ReferralResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/Referral" }
+        }
+      },
+      "Referral": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "email": { "type": "string" },
+              "state": { "type": "string" },
+              "state_set_at": { "type": "integer" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

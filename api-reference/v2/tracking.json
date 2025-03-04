@@ -1,0 +1,108 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Tracking V2",
+    "description": "API specification for tracking conversions in Reditus (Version 2).",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v2/tracking/conversion": {
+      "post": {
+        "summary": "Referral Conversion",
+        "description": "The tracking API allows you to track conversions for any affiliate.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TrackingV2Request" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful conversion",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TrackingV2Response" }
+              }
+            }
+          },
+          "409": {
+            "description": "Referral already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid affiliate slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TrackingV2Request": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "affiliate_slug": { "type": "string" },
+          "uid": { "type": "string" },
+          "gr_id": { "type": "string" }
+        }
+      },
+      "TrackingV2Response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string" },
+              "attributes": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "uid": { "type": "string" },
+                  "state": { "type": "string" },
+                  "state_set_at": { "type": "integer" },
+                  "created_at": { "type": "integer" },
+                  "updated_at": { "type": "integer" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

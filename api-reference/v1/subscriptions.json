@@ -1,0 +1,104 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Subscriptions",
+    "description": "API specification for managing subscriptions in Reditus.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/subscriptions/{id}": {
+      "get": {
+        "summary": "Get Subscription",
+        "description": "Show data for a subscription",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      },
+      "delete": {
+        "summary": "Cancel Subscription",
+        "description": "Cancels a subscription.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscription canceled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string" },
+              "attributes": {
+                "type": "object",
+                "properties": {
+                  "interval": { "type": "string" },
+                  "interval_count": { "type": "integer" },
+                  "status": { "type": "string" },
+                  "original_amount": { "type": "integer" },
+                  "original_currency": { "type": "string" },
+                  "mrr": { "type": "integer" },
+                  "amount": { "type": "integer" },
+                  "currency": { "type": "string" },
+                  "created_at": { "type": "integer" },
+                  "updated_at": { "type": "integer" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
