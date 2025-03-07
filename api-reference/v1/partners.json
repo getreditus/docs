@@ -16,18 +16,37 @@
         "summary": "List Partners",
         "description": "Retrieve a paginated list of partners.",
         "parameters": [
-          { "name": "name_eq", "in": "query", "schema": { "type": "string" } },
-          { "name": "email_eq", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "name_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by name" }
+          },
+          {
+            "name": "email_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by email" }
+          },
           {
             "name": "paypal_email_eq",
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by PayPal email"
+            }
           },
-          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
           {
             "name": "per_page",
             "in": "query",
-            "schema": { "type": "integer", "maximum": 50 }
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
           }
         ],
         "responses": {
@@ -54,7 +73,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string", "description": "Partner id" }
           }
         ],
         "responses": {
@@ -88,9 +107,9 @@
               "pagination": {
                 "type": "object",
                 "properties": {
-                  "page": { "type": "integer", "default": 1 },
-                  "per_page": { "type": "integer", "default": 10 },
-                  "has_more": { "type": "boolean", "default": true }
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
                 }
               }
             }
@@ -107,17 +126,16 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "default": "c562f3dd-46d1-4a1a-a000-88140f5ed37e"
+            "type": "string"
           },
-          "type": { "type": "string", "default": "partner" },
+          "type": { "type": "string" },
           "attributes": {
             "type": "object",
             "properties": {
-              "name": { "type": "string", "default": "test@test.com" },
-              "paypal_email": { "type": "string", "default": "test@test.com" },
-              "created_at": { "type": "integer", "default": 1624613434 },
-              "updated_at": { "type": "integer", "default": 1624613847 }
+              "name": { "type": "string" },
+              "paypal_email": { "type": "string" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" }
             }
           }
         }

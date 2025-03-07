@@ -20,7 +20,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string", "description": "Subscription ID" }
           }
         ],
         "responses": {
@@ -45,7 +45,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": { "type": "string", "description": "Subscription ID" }
           }
         ],
         "responses": {

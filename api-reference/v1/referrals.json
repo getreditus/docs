@@ -16,33 +16,61 @@
         "summary": "List Referrals",
         "description": "Retrieve a paginated list of referrals.",
         "parameters": [
-          { "name": "state_eq", "in": "query", "schema": { "type": "string" } },
-          { "name": "email_eq", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "state_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by state" }
+          },
+          {
+            "name": "email_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by email" }
+          },
           {
             "name": "created_at_lt",
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string",
+              "description": "Created before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
           },
           {
             "name": "created_at_gt",
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string",
+              "description": "Created after (e.g. \"2021-11-23%2012:47:45%20+0200\")"
+            }
           },
           {
             "name": "state_set_at_lt",
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string",
+              "description": "State set at before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
           },
           {
             "name": "state_set_at_gt",
             "in": "query",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string",
+              "description": "State set at before (e.g. \"2021-12-24%2012:47:45%20+0200\")"
+            }
           },
-          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
           {
             "name": "per_page",
             "in": "query",
-            "schema": { "type": "integer", "maximum": 50 }
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
           }
         ],
         "responses": {

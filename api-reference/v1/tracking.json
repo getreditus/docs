@@ -68,10 +68,19 @@
       "TrackingV1Request": {
         "type": "object",
         "properties": {
-          "email": { "type": "string" },
-          "gr_id": { "type": "string" },
-          "pk": { "type": "string" },
-          "uid": { "type": "string" }
+          "email": { "type": "string", "description": "Email of the referral" },
+          "gr_id": {
+            "type": "string",
+            "description": "Cookie set by the tracking script in the referral's browser"
+          },
+          "pk": {
+            "type": "string",
+            "description": "Can replace `gr_id`, in combination with `uid` being used to mark the correct affiliate as the referee"
+          },
+          "uid": {
+            "type": "string",
+            "description": "Can replace `gr_id`, in combination with `pk`, being used to mark the correct affiliate as the referee"
+          }
         },
         "required": ["email", "gr_id"]
       },
