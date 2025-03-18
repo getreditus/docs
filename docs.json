@@ -14,8 +14,15 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
-            "pages": ["introduction"]
+            "group": "Referral Program",
+            "pages": [
+              "referral_program/get_started",
+              {
+                "group": "Widget",
+                "icon": "pen-paintbrush",
+                "pages": ["referral_program/hello", "referral_program/world"]
+              }
+            ]
           }
         ]
       },
