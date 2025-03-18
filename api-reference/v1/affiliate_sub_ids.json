@@ -1,0 +1,53 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Sub IDs",
+    "description": "API specification for getting the Sub IDs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/affiliate/sub_ids": {
+      "get": {
+        "summary": "List Sub IDs",
+        "description": "Retrieve a list of Sub IDs. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubIdListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubIdListResponse": {
+        "type": "object",
+        "properties": {
+          "sub_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
