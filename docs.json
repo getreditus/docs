@@ -79,6 +79,14 @@
           {
             "group": "Tracking V1 (Deprecated)",
             "pages": ["api-reference/v1/tracking/conversion"]
+          },
+          {
+            "group": "[AFFILIATE API] - Referrals",
+            "pages": ["api-reference/v1/affiliate_referrals/index"]
+          },
+          {
+            "group": "[AFFILIATE API] - Sub IDs",
+            "pages": ["api-reference/v1/affiliate_sub_ids/index"]
           }
         ]
       }
