@@ -1,0 +1,123 @@
+---
+title: "Authenticating the User"
+description: "Generate a JSON Web Token (JWT) to securely associate referral data with individual users."
+---
+
+This guide is the second installment in a three-part series on integrating the Reditus Referral Program In-App Widget. In this section, we focus on **generating a JWT** so each user’s referral activity is linked to the correct account. Authentication is handled on your backend to ensure your **product secret** remains private.
+
+## Overview
+
+A JWT is used to identify the user when the widget loads. The **product secret** from Reditus is critical for signing this token and should never be exposed in front-end code. Instead, you will generate the token on your server and pass it to your client.
+
+## Examples
+
+<CodeGroup>
+
+```js NodeJS (Express + Jose)
+const { SignJWT } = require("jose");
+
+app.post("/referral-program/generate-token", async (req, res) => {
+  const SECRET = "YOUR_PRODUCT_SECRET";
+  const PRODUCT_ID = "YOUR_PRODUCT_ID";
+  const userId = req.body.userId; // e.g., from request payload
+
+  try {
+    const secretKey = new TextEncoder().encode(SECRET);
+    const token = await new SignJWT({
+      ProductId: PRODUCT_ID,
+      UserId: userId,
+      iat: Math.floor(Date.now() / 1000),
+    })
+      .setProtectedHeader({ alg: "HS512", typ: "JWT" })
+      .sign(secretKey);
+
+    return res.json({ token });
+  } catch (error) {
+    return res.status(500).json({ error: "Token generation failed" });
+  }
+});
+```
+
+```rb Ruby (Rails + jwt)
+# config/routes.rb
+Rails.application.routes.draw do
+  post 'referral-program/tokens', to: 'referral_tokens#create'
+end
+
+# app/controllers/referral_tokens_controller.rb
+require 'jwt'
+
+class ReferralTokensController < ApplicationController
+  def create
+    secret     = "YOUR_PRODUCT_SECRET"
+    product_id = "YOUR_PRODUCT_ID"
+    user_id    = params[:userId]
+
+    payload = {
+      ProductId: product_id,
+      UserId:    user_id,
+      iat:       Time.now.to_i
+    }
+
+    token = JWT.encode(payload, secret, 'HS512')
+    render json: { token: token }
+  end
+end
+```
+
+```py Python (Django + pyjwt)
+# urls.py
+from django.urls import path
+from .views import generate_referral_token
+
+urlpatterns = [
+    path('referral-program/generate-token/', generate_referral_token, name='generate-referral-token'),
+]
+
+# views.py
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import jwt
+import time
+
+@csrf_exempt
+def generate_referral_token(request):
+    if request.method == 'POST':
+        SECRET      = "YOUR_PRODUCT_SECRET"
+        PRODUCT_ID  = "YOUR_PRODUCT_ID"
+        user_id     = request.POST.get('userId') or request.GET.get('userId')
+
+        payload = {
+            "ProductId": PRODUCT_ID,
+            "UserId":    user_id,
+            "iat":       int(time.time())
+        }
+
+        token = jwt.encode(payload, SECRET, algorithm='HS512')
+        return JsonResponse({"token": token})
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+```
+
+</CodeGroup>
+
+You can generate JWTs in virtually any language or framework using popular libraries: [jwt.io/libraries](https://jwt.io/libraries)
+
+## Parameters
+
+| Parameter          | Type   | Description                                                                                                      |
+| ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------- |
+| `SECRET`           | string | **Required.** The product secret obtained from your Reditus dashboard. Must never be exposed on the client side. |
+| `PRODUCT_ID`       | string | **Required.** The unique product identifier from the Reditus configuration.                                      |
+| `USER_ID`          | string | **Required.** Your internal user identifier (e.g., database ID) that will be tied to referral data.              |
+| `tokenPayload`     | object | **Payload** for the JWT. In this example, includes `ProductId`, `UserId`, and `iat`.                             |
+| `tokenPayload.iat` | number | The current time in seconds (issued at). Ensures the token creation time is recorded.                            |
+
+## Usage
+
+1. **Generate** this token on your backend using the product secret and product ID.
+2. **Send** the token to your frontend (e.g., via an API response).
+3. **Use** the token in the auth_token parameter of the `gr("loadReferralWidget", ...)` (detailed in [Loading the Widget](./loading)).
+
+## Next steps
+
+**Final Step:** Continue to [Showing the Widget Modal](./show) to learn how to present the referral interface to users.

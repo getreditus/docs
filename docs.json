@@ -18,9 +18,12 @@
             "pages": [
               "referral_program/get_started",
               {
-                "group": "Widget",
-                "icon": "pen-paintbrush",
-                "pages": ["referral_program/hello", "referral_program/world"]
+                "group": "In-app Widget",
+                "pages": [
+                  "referral_program/loading",
+                  "referral_program/authentication",
+                  "referral_program/show"
+                ]
               }
             ]
           }
@@ -120,13 +123,12 @@
       {
         "label": "Support",
         "href": "mailto:info@getreditus.com"
+      },
+      {
+        "label": "Dashboard",
+        "href": "https://app.getreditus.com"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://docs.getreditus.com"
-    }
+    ]
   },
   "footer": {
     "socials": {
