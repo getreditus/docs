@@ -14,7 +14,7 @@
     "/v1/referrals": {
       "get": {
         "summary": "List Referrals",
-        "description": "Retrieve a paginated list of referrals.",
+        "description": "Retrieve a paginated list of referrals",
         "parameters": [
           {
             "name": "state_eq",
