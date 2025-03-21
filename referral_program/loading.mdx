@@ -1,0 +1,49 @@
+---
+title: "Loading the Widget"
+description: "Learn how to load the Reditus referral program widget into your application."
+---
+
+This document is part of a 3-part guide for integrating the Reditus Referral Program In-App Widget. In this first step, we’ll cover how to **load** the widget into your application. Loading the widget is essential because it brings in the necessary JavaScript and exposes the functions you’ll need to display referral information to your users.
+
+## Overview
+
+The Reditus referral widget is loaded via the [**Pageview Tracking Script**](<(https://app.getreditus.com/saas/settings/installation)>), that should already be installed in your app.
+
+You should add the following snippet **where your frontend has access to user data and the JWT token from your backend**. Once you invoke the `gr("loadReferralWidget", ...)` method, it automatically fetches the referral program code and makes the widget available through `window.referralWidget`.
+
+## Example Usage
+
+```javascript Javascript
+const authToken = await fetchAuthToken();
+
+window.gr("loadReferralWidget", {
+  product_id: PRODUCT_ID,
+  auth_token: authToken,
+  user_details: {
+    email: "john@example.com",
+    first_name: "John",
+    last_name: "Doe",
+    company_id: "1as2-3df4-5fg6-7hj8",
+    company_name: "Acme",
+  },
+});
+```
+
+## Parameters
+
+| Parameter                   | Type   | Description                                                                                                                                                                                                          |
+| --------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `product_id`                | string | **Required.** The Product ID from your Reditus configuration, available at [app.getreditus.com/saas/referral_program/config/authentication](https://app.getreditus.com/saas/referral_program/config/authentication). |
+| `auth_token`                | string | **Required.** A JSON Web Token (JWT) generated on your server using your Reditus **product secret**. Refer to [Authenticating the User](./authentication) for details on token creation.                             |
+| `user_details`              | object | **Required to send at least one field within.** Contains user information to associate referral program data with a specific user. (See breakdown of nested fields below.)                                           |
+| `user_details.first_name`   | string | The user's first name.                                                                                                                                                                                               |
+| `user_details.last_name`    | string | The user's last name.                                                                                                                                                                                                |
+| `user_details.email`        | string | **Required on free plan for sending email notifications towards the advocate.** The user's email address.                                                                                                            |
+| `user_details.company_id`   | string | The company ID or organization associated with the user.                                                                                                                                                             |
+| `user_details.company_name` | string | The company name or organization associated with the user.                                                                                                                                                           |
+
+Once called, the script fetches the referral widget and attaches it to window.referralWidget, allowing you to interact with it in your application.
+
+## Next steps
+
+Check out [Authenticating the User](./authentication) to learn how to generate the `auth_token` (JWT).

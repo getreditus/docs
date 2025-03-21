@@ -1,0 +1,108 @@
+---
+title: "Showing the Widget Modal"
+description: "Display the in-app referral modal so users can share referral links and track referrals directly in your application."
+---
+
+This guide is the final section in a three-part series on integrating the Reditus Referral Program In-App Widget. Now that you’ve **loaded** the widget (Step 1) and **authenticated** your users (Step 2), the final step is to present the referral interface inside your application.
+
+## Overview
+
+Once the widget is **loaded** with `gr("loadReferralWidget", ...)` and a valid `auth_token` (JWT) is provided, the referral interface is accessible via `window.referralWidget`. You can invoke this at any time to display the referral modal.
+
+## Displaying the Modal
+
+```js Javascript
+window.referralWidget.show();
+```
+
+This method instantly shows the in-app referral modal. Link this action to a button in your UI: top navigation, side menu, or a dedicated "Referrals" page, so users can easily access and share their referral link.
+
+## Examples
+
+<CodeGroup>
+```js React
+import React from "react";
+
+function ReferralButton() {
+  const handleShowReferralModal = () => {
+    if (window.referralWidget) {
+      window.referralWidget.show();
+    } else {
+      console.error("Referral widget not initialized or unavailable.");
+    }
+  };
+
+  return <button onClick={handleShowReferralModal}>Share & Earn</button>;
+}
+
+export default ReferralButton;
+```
+
+```js Vue
+<template>
+  <button @click="showReferralModal">Share & Earn</button>
+</template>
+
+<script>
+export default {
+  name: "ReferralButton",
+  methods: {
+    showReferralModal() {
+      if (window.referralWidget) {
+        window.referralWidget.show();
+      } else {
+        console.error("Referral widget not initialized or unavailable.");
+      }
+    },
+  },
+};
+</script>
+```
+
+```js Angular
+// referral-button.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-referral-button',
+  template: `<button (click)="showReferralModal()">Share & Earn</button>`
+})
+export class ReferralButtonComponent {
+  showReferralModal(): void {
+    if ((window as any).referralWidget) {
+      (window as any).referralWidget.show();
+    } else {
+      console.error('Referral widget not initialized or unavailable.');
+    }
+  }
+}
+```
+
+```js Svelte
+<script>
+  function showReferralModal() {
+    if (window.referralWidget) {
+      window.referralWidget.show();
+    } else {
+      console.error("Referral widget not initialized or unavailable.");
+    }
+  }
+</script>
+
+<button on:click={showReferralModal}>Share & Earn</button>
+```
+
+```js Plain Javascript
+<button id="showReferralModalBtn">Share & Earn</button>
+<script>
+  document.getElementById("showReferralModalBtn").addEventListener("click", function() {
+    if (window.referralWidget) {
+      window.referralWidget.show();
+    } else {
+      console.error("Referral widget not initialized or unavailable.");
+    }
+  });
+</script>
+```
+
+</CodeGroup>
