@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Reditus API - Referrals",
-    "description": "API specification for managing referrals in Reditus.",
+    "title": "Reditus API - Leads",
+    "description": "API specification for managing leads in Reditus lead programs.",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,15 +11,23 @@
     }
   ],
   "paths": {
-    "/v1/referrals": {
+    "/v1/leads": {
       "get": {
-        "summary": "List Referrals",
-        "description": "Retrieve a paginated list of referrals",
+        "summary": "List Leads",
+        "description": "Retrieve a paginated list of leads",
         "parameters": [
           {
             "name": "state_eq",
             "in": "query",
             "schema": { "type": "string", "description": "Filter by state" }
+          },
+          {
+            "name": "advocate_id_eq",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Filter by advocate ID"
+            }
           },
           {
             "name": "email_eq",
@@ -79,7 +87,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferralListResponse"
+                  "$ref": "#/components/schemas/LeadListResponse"
                 }
               }
             }
@@ -88,10 +96,10 @@
         "security": [{ "BearerAuth": [] }]
       }
     },
-    "/v1/referrals/{id}": {
+    "/v1/leads/{id}": {
       "get": {
-        "summary": "Get Referral",
-        "description": "Show data for a referral.",
+        "summary": "Get Lead",
+        "description": "Show data for a lead.",
         "parameters": [
           {
             "name": "id",
@@ -106,7 +114,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferralResponse"
+                  "$ref": "#/components/schemas/LeadResponse"
                 }
               }
             }
@@ -118,12 +126,12 @@
   },
   "components": {
     "schemas": {
-      "ReferralListResponse": {
+      "LeadListResponse": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Referral" }
+            "items": { "$ref": "#/components/schemas/Lead" }
           },
           "meta": {
             "type": "object",
@@ -140,13 +148,13 @@
           }
         }
       },
-      "ReferralResponse": {
+      "LeadResponse": {
         "type": "object",
         "properties": {
-          "data": { "$ref": "#/components/schemas/Referral" }
+          "data": { "$ref": "#/components/schemas/Lead" }
         }
       },
-      "Referral": {
+      "Lead": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
@@ -155,6 +163,8 @@
             "type": "object",
             "properties": {
               "email": { "type": "string" },
+              "uid": { "type": "string" },
+              "advocate_id": { "type": "string" },
               "state": { "type": "string" },
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },
