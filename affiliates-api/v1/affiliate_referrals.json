@@ -1,0 +1,148 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Referrals",
+    "description": "API specification for managing referrals in Reditus.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/affiliate/referrals": {
+      "get": {
+        "summary": "List Referrals",
+        "description": "Retrieve a paginated list of referrals. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint.",
+        "parameters": [
+          {
+            "name": "state_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by state" }
+          },
+          {
+            "name": "sub_id_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by sub ID" }
+          },
+          {
+            "name": "created_at_lt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "created_at_gt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created after (e.g. \"2021-11-23%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "state_set_at_lt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "State set at before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "state_set_at_gt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "State set at before (e.g. \"2021-12-24%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReferralListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Referral" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ReferralResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/Referral" }
+        }
+      },
+      "Referral": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "email": { "type": "string" },
+              "state": { "type": "string" },
+              "sub_id": { "type": "string" },
+              "state_set_at": { "type": "integer" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

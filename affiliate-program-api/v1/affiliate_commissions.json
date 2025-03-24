@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Reditus API - Referrals",
-    "description": "API specification for managing referrals in Reditus.",
+    "title": "Reditus API - Commissions",
+    "description": "API specification for managing commissions in Reditus.",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,10 +11,10 @@
     }
   ],
   "paths": {
-    "/v1/affiliate/referrals": {
+    "/v1/affiliate/commissions": {
       "get": {
-        "summary": "List Referrals",
-        "description": "Retrieve a paginated list of referrals. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint.",
+        "summary": "List Commissions",
+        "description": "Retrieve a paginated list of commissions. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint.",
         "parameters": [
           {
             "name": "state_eq",
@@ -79,7 +79,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ReferralListResponse"
+                  "$ref": "#/components/schemas/CommissionListResponse"
                 }
               }
             }
@@ -91,12 +91,12 @@
   },
   "components": {
     "schemas": {
-      "ReferralListResponse": {
+      "CommissionListResponse": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Referral" }
+            "items": { "$ref": "#/components/schemas/Commission" }
           },
           "meta": {
             "type": "object",
@@ -113,13 +113,13 @@
           }
         }
       },
-      "ReferralResponse": {
+      "CommissionResponse": {
         "type": "object",
         "properties": {
-          "data": { "$ref": "#/components/schemas/Referral" }
+          "data": { "$ref": "#/components/schemas/Commission" }
         }
       },
-      "Referral": {
+      "Commission": {
         "type": "object",
         "properties": {
           "id": { "type": "string" },
@@ -129,6 +129,7 @@
             "properties": {
               "email": { "type": "string" },
               "state": { "type": "string" },
+              "sub_id": { "type": "string" },
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }

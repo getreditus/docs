@@ -30,66 +30,99 @@
         ]
       },
       {
-        "tab": "API Docs",
+        "tab": "Affiliate Program API",
         "groups": [
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication",
-              "api-reference/rate-limits"
+              "affiliate-program-api/introduction",
+              "affiliate-program-api/authentication",
+              "affiliate-program-api/rate-limits"
             ]
           },
           {
             "group": "Affiliates",
             "pages": [
-              "api-reference/v1/partners/index",
-              "api-reference/v1/partners/show"
+              "affiliate-program-api/v1/partners/index",
+              "affiliate-program-api/v1/partners/show"
             ]
           },
           {
             "group": "Partnerships",
             "pages": [
-              "api-reference/v1/partnerships/index",
-              "api-reference/v1/partnerships/show"
+              "affiliate-program-api/v1/partnerships/index",
+              "affiliate-program-api/v1/partnerships/show"
             ]
           },
           {
             "group": "Referrals",
             "pages": [
-              "api-reference/v1/referrals/index",
-              "api-reference/v1/referrals/show"
+              "affiliate-program-api/v1/referrals/index",
+              "affiliate-program-api/v1/referrals/show"
             ]
           },
           {
             "group": "Payments",
             "pages": [
-              "api-reference/v1/payments/create",
-              "api-reference/v1/payments/show"
+              "affiliate-program-api/v1/payments/create",
+              "affiliate-program-api/v1/payments/show"
             ]
           },
           {
             "group": "Tracking V2",
-            "pages": ["api-reference/v2/tracking/conversion"]
+            "pages": ["affiliate-program-api/v2/tracking/conversion"]
           },
           {
             "group": "Subscriptions",
             "pages": [
-              "api-reference/v1/subscriptions/show",
-              "api-reference/v1/subscriptions/destroy"
+              "affiliate-program-api/v1/subscriptions/show",
+              "affiliate-program-api/v1/subscriptions/destroy"
             ]
           },
           {
             "group": "Tracking V1 (Deprecated)",
-            "pages": ["api-reference/v1/tracking/conversion"]
+            "pages": ["affiliate-program-api/v1/tracking/conversion"]
+          }
+        ]
+      },
+      {
+        "tab": "Referral Program API",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "referral-program-api/introduction",
+              "referral-program-api/authentication",
+              "referral-program-api/rate-limits"
+            ]
           },
           {
-            "group": "[AFFILIATE API] - Referrals",
-            "pages": ["api-reference/v1/affiliate_referrals/index"]
+            "group": "Leads",
+            "pages": [
+              "referral-program-api/v1/leads/index",
+              "referral-program-api/v1/leads/show"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Affiliate Program API",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "affiliates-api/introduction",
+              "affiliates-api/authentication",
+              "affiliates-api/rate-limits"
+            ]
           },
           {
-            "group": "[AFFILIATE API] - Sub IDs",
-            "pages": ["api-reference/v1/affiliate_sub_ids/index"]
+            "group": "Referrals",
+            "pages": ["affiliates-api/v1/affiliate_referrals/index"]
+          },
+          {
+            "group": "Sub IDs",
+            "pages": ["affiliates-api/v1/affiliate_sub_ids/index"]
           }
         ]
       }
@@ -102,8 +135,18 @@
           "icon": "book-open-cover"
         },
         {
-          "anchor": "API Docs",
-          "href": "https://docs.getreditus.com/api-reference",
+          "anchor": "Affiliate Program API",
+          "href": "https://docs.getreditus.com/affiliate-program-api",
+          "icon": "file-doc"
+        },
+        {
+          "anchor": "Referral Program API",
+          "href": "https://docs.getreditus.com/referral-program-api",
+          "icon": "file-user"
+        },
+        {
+          "anchor": "Affiliates API",
+          "href": "https://docs.getreditus.com/affiliates-api",
           "icon": "file-doc"
         },
         {
