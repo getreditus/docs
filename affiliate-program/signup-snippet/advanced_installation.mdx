@@ -1,0 +1,41 @@
+---
+title: Advanced Installation
+description: "Signup Snippet Advanced Installation"
+---
+
+# Advanced Integration (Stripe or API only)
+
+To enhance tracking accuracy, we recommend including an additional parameter in the email, such as your customer's internal ID. Since email addresses can change over time, having a stable identifier ensures consistency.
+
+```
+window.gr("track", "conversion", { email: "actual@email.com", uid: "your-internal-user-customer-id" });
+```
+
+### Stripe Integration
+
+After a user signs up on your platform, trigger the `customer.created` Stripe event and include the `user_id` in the metadata—ideally right after the signup snippet.
+
+```
+{
+  "id": "evt_1Example1234567890",
+  "object": "event",
+  "api_version": "2023-10-16",
+  "created": 1707859200,
+  "data": {
+    "object": {
+      "id": "cus_1234567890abcdef",
+      "object": "customer",
+      "metadata": {
+          "user_id": "your-internal-customer-id" // Matching is done against this field
+      },
+    }
+  },
+  "type": "customer.created"
+}
+```
+
+**Important:** If the signup snippet runs after the customer.created Stripe event, it must happen within **30 seconds** to ensure the Stripe customer is correctly matched with the referral.
+
+### API Integration
+
+If you’re using the API, ensure you're on **V2 of the Tracking API** and include the `uid` parameter.

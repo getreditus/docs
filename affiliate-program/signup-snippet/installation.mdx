@@ -1,0 +1,80 @@
+---
+title: Installation
+description: "Signup Snippet Installation"
+---
+
+## How to install?
+
+**Before installing the snippet, ensure that you have already added the tracking script to your page.**
+
+The `gr` function is only available if you already installed the Tracking Script.
+
+## React JS
+
+In a React application, you'll need to call the Reditus conversion event in the callback of your sign-up success handler.
+
+```
+handleSignupSubmit(values) {
+  const { signUp } = this.props;
+  signUp({ ...values })
+    .then(() => {
+      console.log('Account created successfully.');
+      if (typeof window.gr === 'function') {
+        console.log('✅ gr function is defined');
+        window.gr("track", "conversion", { email: "actual@email.com" });
+      } else {
+        console.log('⛔️ gr function is NOT defined');
+      }
+    })
+    .catch((err) => {
+      console.log('Something went wrong. Please try again later!');
+    });
+}
+```
+
+## Javascript
+
+For standard JavaScript, simply include the snippet in your success handler when the user signs up:
+
+```
+if (typeof window.gr === 'function') {
+window.gr("track", "conversion", { email: "actual@email.com" });
+} else {
+console.error('Tracking Script not running, check why.');
+}
+```
+
+## Ruby On Rails
+
+If you're using Ruby on Rails, you'll need to mark new referrals when a user successfully signs up. Add the following code to your application to track user registrations using the **Devise** gem.
+
+1. **Controller**: In your `app/controllers/users/registrations_controller.rb`, you’ll track successful user sign-ups like this:
+
+```
+class RegistrationsController < Devise::RegistrationsController
+  def create
+    #...
+    resource.save
+    if resource.persisted?
+      # Account created
+      session[:reditus_referral] = sign_up_params[:email]
+    else
+      # Authentication failed
+      # ...
+    end
+  end
+end
+```
+
+Here, we store the email of the newly created user in session[:reditus_referral].
+
+
+2. **View**: In your `app/views/layouts/application.html.erb`, add the following code to call the tracking method after the registration is complete:
+
+```
+<% if session[:reditus_referral].present? %>
+  <script>
+    window.gr("track", "conversion", { email: "<%= session[:reditus_referral] %>" });
+  </script>
+<% end %>
+```

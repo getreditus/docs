@@ -1,0 +1,35 @@
+---
+title: Introduction
+description: "Signup Snippet Introduction"
+---
+
+# What is the Signup Snippet?
+
+The Reditus Sign-up Snippet is a single line of JS code that should be triggered after a successful sign-up.
+
+This snippet sends Reditus the email (or uid) of the person who signed up, ideally right after registration or when onboarding flow started.
+
+```
+  gr('track', 'conversion', { email: "email@example.com", uid: "1234-abcd });
+```
+
+**Make sure to replace the email and uid with the actual user data.**
+
+
+## How to install?
+
+**Before installing the snippet, ensure that you have already added the tracking script to your page.**
+
+The `gr` function is only available if you already installed the Tracking Script.
+
+## Video
+
+<iframe
+  width="560"
+  height="315"
+  src="https://youtu.be/_hK5WK28nLU"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
