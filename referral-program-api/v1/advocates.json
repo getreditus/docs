@@ -1,0 +1,126 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Advocates",
+    "description": "API specification for managing advocates in Reditus advocate programs.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/advocates": {
+      "get": {
+        "summary": "List Advocates",
+        "description": "Retrieve a paginated list of advocates",
+        "parameters": [
+          {
+            "name": "created_at_lt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "created_at_gt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created after (e.g. \"2021-11-23%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvocateListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdvocateListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Advocate" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "AdvocateResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/Advocate" }
+        }
+      },
+      "Advocate": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "uid": { "type": "string" },
+              "email": { "type": "string" },
+              "first_name": { "type": "string" },
+              "last_name": { "type": "string" },
+              "slug": { "type": "string" },
+              "referral_link": { "type": "string" },
+              "company_id": { "type": "string" },
+              "company": { "type": "string" },
+              "created_at": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
