@@ -123,6 +123,10 @@
             ]
           },
           {
+            "group": "Advocates",
+            "pages": ["referral-program-api/v1/advocates/index"]
+          },
+          {
             "group": "Leads",
             "pages": [
               "referral-program-api/v1/leads/index",
