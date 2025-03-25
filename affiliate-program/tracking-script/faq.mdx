@@ -1,0 +1,28 @@
+---
+title: FAQs
+description: "Frequently asked questions"
+---
+
+## We installed our script, but it isn’t working properly. What could be wrong?
+
+- It’s not installed on all pages (including the sign-up page).
+- You’ve used the wrong GTM container.
+- You haven’t added it before the `</head>` tag.
+
+## We can't verify the tracking script on the installation page
+
+If the tracking script is installed, but you can't have it go to **'verified'** on the installation page, you probably are not using an affiliate link to test it. Make sure to use the link provided in your installation page to test the tracking, this replicates an affiliate link.
+
+![tracking-script1](/affiliate-program/tracking-script/assets/tracking-script1.webp)
+
+If this doesn't work, see if the cookie is being placed by checking the developer console in your chrome browser. The cookie `gr_id` should be present when going to the website using the link from your installation page.
+
+If the cookie isn't present; check your installation of the tracking script.
+
+![tracking-script2](/affiliate-program/tracking-script/assets/tracking-script2.webp)
+
+If the cookie is present; contact us so we can investigate further for you.
+
+## I have a composit TLD, 2td - second level domain.
+
+We have second level domain and the tracking script isn't working? This could be we have not added this on our backend, as these work a bit different than normal domains. Ping us in chat and we will get this sorted for you.

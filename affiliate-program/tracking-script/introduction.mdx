@@ -1,0 +1,45 @@
+---
+title: Introduction
+description: "Tracking Script Introduction"
+---
+
+# What is the tracking script?
+
+The tracking script is essential for monitoring affiliate conversions on your website. It tracks when someone clicks an affiliate link and completes a sign-up. After an affiliate link is clicked, a cookie 🍪 is placed on the user's device. You control the duration of this cookie in your dashboard.
+
+## How to install?
+
+**The script must be added on all pages and subdomains.**
+
+## Script structure
+
+Do **not** use this script directly. Use the one you have in your [dashboard](https://app.getreditus.com/saas/settings/installation).
+
+```
+  <script>
+  (function (w, d, s, p, t) {
+    w.gr = w.gr || function () {
+      w.gr.ce = 60; w.gr.q = w.gr.q || []; w.gr.q.push(arguments);
+    };
+    p = d.getElementsByTagName(s)[0];
+    t = d.createElement(s); t.async = true; t.src = "https://script.getreditus.net/v2.js"; p.parentNode.insertBefore(t, p); })(window, document, "script");
+    gr("initCustomer", "YOUR-REDITUS-UID");
+    gr("track", "pageview");
+  </script>
+```
+
+## Video
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/watch?v=TqZwGeENfo4"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## Additional notes
+
+Do not place the tracking script behind a cookie consent banner. Since we don’t build visitor profiles, no cookie consent is required.

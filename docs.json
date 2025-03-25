@@ -14,15 +14,41 @@
         "tab": "Guides",
         "groups": [
           {
+            "group": "Get Started",
+            "pages": ["get-started/introduction"]
+          },
+          {
+            "group": "Affiliate Program",
+            "pages": [
+              "affiliate-program/get_started",
+              {
+                "group": "Tracking Script",
+                "pages": [
+                  "affiliate-program/tracking-script/introduction",
+                  "affiliate-program/tracking-script/installation",
+                  "affiliate-program/tracking-script/faq"
+                ]
+              },
+              {
+                "group": "Signup Snippet",
+                "pages": [
+                  "affiliate-program/signup-snippet/introduction",
+                  "affiliate-program/signup-snippet/installation",
+                  "affiliate-program/signup-snippet/advanced_installation"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Referral Program",
             "pages": [
-              "referral_program/get_started",
+              "referral-program/get_started",
               {
                 "group": "In-app Widget",
                 "pages": [
-                  "referral_program/loading",
-                  "referral_program/authentication",
-                  "referral_program/show"
+                  "referral-program/loading",
+                  "referral-program/authentication",
+                  "referral-program/show"
                 ]
               }
             ]
@@ -33,7 +59,7 @@
         "tab": "Affiliate Program API",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Affiliate Program API",
             "pages": [
               "affiliate-program-api/introduction",
               "affiliate-program-api/authentication",
@@ -89,7 +115,7 @@
         "tab": "Referral Program API",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Referral Program API",
             "pages": [
               "referral-program-api/introduction",
               "referral-program-api/authentication",
@@ -106,10 +132,10 @@
         ]
       },
       {
-        "tab": "Affiliate Program API",
+        "tab": "Affiliates API",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Affiliates API",
             "pages": [
               "affiliates-api/introduction",
               "affiliates-api/authentication",
@@ -129,26 +155,6 @@
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Guides",
-          "href": "https://docs.getreditus.com",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Affiliate Program API",
-          "href": "https://docs.getreditus.com/affiliate-program-api",
-          "icon": "file-doc"
-        },
-        {
-          "anchor": "Referral Program API",
-          "href": "https://docs.getreditus.com/referral-program-api",
-          "icon": "file-user"
-        },
-        {
-          "anchor": "Affiliates API",
-          "href": "https://docs.getreditus.com/affiliates-api",
-          "icon": "file-doc"
-        },
         {
           "anchor": "Help Center",
           "href": "https://help.getreditus.com",
