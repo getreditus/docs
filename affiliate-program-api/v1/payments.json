@@ -31,6 +31,26 @@
                 "schema": { "$ref": "#/components/schemas/PaymentResponse" }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request - Validation error, rejected/expired referral or partnership terminated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Referral not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseReferralNotFound"
+                }
+              }
+            }
           }
         },
         "security": [{ "BearerAuth": [] }]
@@ -111,6 +131,50 @@
               "id": { "type": "string" },
               "type": { "type": "string" },
               "attributes": { "$ref": "#/components/schemas/PaymentRequest" }
+            }
+          }
+        }
+      },
+      "ErrorResponseReferralNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "type": "string",
+                  "example": "Referral not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "type": "object",
+                  "description": "Field-specific error messages",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "example": {
+                    "amount": ["must be an integer"],
+                    "idempotency_key": ["has already been taken"]
+                  }
+                }
+              }
             }
           }
         }
