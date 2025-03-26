@@ -60,6 +60,37 @@
           }
         },
         "security": [{ "BearerAuth": [] }]
+      },
+      "post": {
+        "summary": "Create Advocate",
+        "description": "Create an advocate for your referral program",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AdvocateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AdvocateResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. UID blank or UID already taken.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
       }
     }
   },
@@ -93,6 +124,36 @@
           "data": { "$ref": "#/components/schemas/Advocate" }
         }
       },
+      "AdvocateRequest": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "The internal ID of the user in your system"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email of the user"
+          },
+          "first_name": {
+            "type": "integer",
+            "description": "User first name"
+          },
+          "last_name": {
+            "type": "integer",
+            "description": "User last name"
+          },
+          "company": {
+            "type": "integer",
+            "description": "User's company name"
+          },
+          "company_id": {
+            "type": "integer",
+            "description": "User's company ID. This is to group users from the same company"
+          }
+        },
+        "required": ["uid"]
+      },
       "Advocate": {
         "type": "object",
         "properties": {
@@ -113,6 +174,34 @@
               "created_at": { "type": "integer" }
             }
           }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "$ref": "#/components/schemas/ErrorDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorDetails": {
+        "type": "object",
+        "description": "Keyed by field name, value is an array of error messages",
+        "example": {
+          "uid": ["can't be blank", "has already been taken"]
+        },
+        "additionalProperties": {
+          "type": "array",
+          "items": { "type": "string" }
         }
       }
     },
