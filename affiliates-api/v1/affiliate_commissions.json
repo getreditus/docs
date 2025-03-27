@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Reditus API - Commissions",
-    "description": "API specification for managing commissions in Reditus.",
+    "title": "Reditus API - Asd",
+    "description": "API specification for listing commissions in Reditus.",
     "version": "1.0.0"
   },
   "servers": [
@@ -19,12 +19,18 @@
           {
             "name": "state_eq",
             "in": "query",
-            "schema": { "type": "string", "description": "Filter by state" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by state (pending paid rejected)"
+            }
           },
           {
             "name": "sub_id_eq",
             "in": "query",
-            "schema": { "type": "string", "description": "Filter by sub ID" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by sub ID (referral sub_id)"
+            }
           },
           {
             "name": "created_at_lt",
@@ -127,8 +133,9 @@
           "attributes": {
             "type": "object",
             "properties": {
-              "email": { "type": "string" },
               "state": { "type": "string" },
+              "amount": { "type": "integer" },
+              "currency": { "type": "string" },
               "sub_id": { "type": "string" },
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },

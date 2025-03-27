@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Reditus API - Referrals",
-    "description": "API specification for managing referrals in Reditus.",
+    "description": "API specification for listing referrals in Reditus.",
     "version": "1.0.0"
   },
   "servers": [
@@ -19,7 +19,10 @@
           {
             "name": "state_eq",
             "in": "query",
-            "schema": { "type": "string", "description": "Filter by state" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by state (clicked converted paid churned rejected) \n To get clicks, simply specify use the clicked filter"
+            }
           },
           {
             "name": "sub_id_eq",
@@ -130,7 +133,9 @@
               "email": { "type": "string" },
               "state": { "type": "string" },
               "sub_id": { "type": "string" },
+              "commission_percentage": { "type": "integer" },
               "state_set_at": { "type": "integer" },
+              "commission_end_date": { "type": "integer" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
             }
