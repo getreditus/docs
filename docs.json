@@ -154,6 +154,10 @@
             "pages": ["affiliates-api/v1/affiliate_referrals/index"]
           },
           {
+            "group": "Commissions",
+            "pages": ["affiliates-api/v1/affiliate_commissions/index"]
+          },
+          {
             "group": "Sub IDs",
             "pages": ["affiliates-api/v1/affiliate_sub_ids/index"]
           }
