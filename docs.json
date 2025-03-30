@@ -135,6 +135,10 @@
               "referral-program-api/v1/leads/index",
               "referral-program-api/v1/leads/show"
             ]
+          },
+          {
+            "group": "Rewards",
+            "pages": ["referral-program-api/v1/rewards/index"]
           }
         ]
       },
