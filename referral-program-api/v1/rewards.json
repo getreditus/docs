@@ -1,0 +1,145 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Rewards",
+    "description": "API specification for managing rewards in Reditus reward programs.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/rewards": {
+      "get": {
+        "summary": "List Rewards",
+        "description": "Retrieve a paginated list of rewards",
+        "parameters": [
+          {
+            "name": "state_eq",
+            "in": "query",
+            "schema": { "type": "string", "description": "Filter by state" }
+          },
+          {
+            "name": "advocate_id_eq",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Filter by advocate ID"
+            }
+          },
+          {
+            "name": "lead_id_eq",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Filter by lead ID"
+            }
+          },
+          {
+            "name": "created_at_lt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created before (e.g. \"2022-12-24%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "created_at_gt",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "description": "Created after (e.g. \"2021-11-23%2012:47:45%20+0200\")"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RewardListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Reward" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/Reward" }
+        }
+      },
+      "Reward": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "advocate_id": { "type": "string" },
+              "lead_id": { "type": "string" },
+              "amount": { "type": "integer" },
+              "currency": { "type": "string" },
+              "state": { "type": "string" },
+              "created_at": { "type": "integer" },
+              "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
