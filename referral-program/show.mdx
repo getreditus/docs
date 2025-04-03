@@ -9,7 +9,14 @@ This guide is the final section in a three-part series on integrating the Reditu
 
 Once the widget is **loaded** with `gr("loadReferralWidget", ...)` and a valid `auth_token` (JWT) is provided, the referral interface is accessible via `window.referralWidget`. You can invoke this at any time to display the referral modal.
 
-## Displaying the Modal
+There are two ways to display the modal:
+
+1. **[Programmatically via JavaScript](#displaying-the-modal-programmatically)** – Manually trigger the modal from a button or custom UI event.
+2. **[Automatically via URL Parameters](#displaying-the-modal-via-url-parameters)** – Open the modal based on a query string like `?reditus-show-referral=program`.
+
+Use whichever approach fits your use case best—or both!
+
+## Displaying the Modal Programmatically
 
 ```js Javascript
 window.referralWidget.show();
@@ -17,7 +24,7 @@ window.referralWidget.show();
 
 This method instantly shows the in-app referral modal. Link this action to a button in your UI: top navigation, side menu, or a dedicated "Referrals" page, so users can easily access and share their referral link.
 
-## Examples
+### Implementation Example
 
 <CodeGroup>
 ```js React
@@ -106,3 +113,25 @@ export class ReferralButtonComponent {
 ```
 
 </CodeGroup>
+
+## Displaying the Modal via URL Parameters
+
+The widget also supports deep linking using a query parameter like:
+
+`?reditus-show-referral=program`
+
+When the URL contains this parameter, the referral widget will **automatically open** and optionally switch to a specific tab:
+
+| Value       | Behavior                           |
+| ----------- | ---------------------------------- |
+| `program`   | Opens the **Referral Program** tab |
+| `referrals` | Opens the **Referrals** tab        |
+| `rewards`   | Opens the **Rewards** tab          |
+
+### Example URLs
+
+- `https://your-app.com/dashboard?reditus-show-referral=program`
+- `https://your-app.com/account/settings?reditus-show-referral=referrals`
+- `https://your-app.com/billing?reditus-show-referral=rewards`
+
+> ℹ️ The modal will open automatically after the widget is loaded and the user is authenticated.
