@@ -12,7 +12,7 @@ Once the widget is **loaded** with `gr("loadReferralWidget", ...)` and a valid `
 There are two ways to display the modal:
 
 1. **[Programmatically via JavaScript](#displaying-the-modal-programmatically)** – Manually trigger the modal from a button or custom UI event.
-2. **[Automatically via URL Parameters](#displaying-the-modal-via-url-parameters)** – Open the modal based on a query string like `?show-reditus-referral=program`.
+2. **[Automatically via URL Parameters](#displaying-the-modal-via-url-parameters)** – Open the modal based on a query string like `?reditus-show-referral=program`.
 
 Use whichever approach fits your use case best—or both!
 
@@ -118,7 +118,7 @@ export class ReferralButtonComponent {
 
 The widget also supports deep linking using a query parameter like:
 
-`?show-reditus-referral=program`
+`?reditus-show-referral=program`
 
 When the URL contains this parameter, the referral widget will **automatically open** and optionally switch to a specific tab:
 
@@ -130,8 +130,8 @@ When the URL contains this parameter, the referral widget will **automatically o
 
 ### Example URLs
 
-- `https://your-app.com/dashboard?show-reditus-referral=program`
-- `https://your-app.com/account/settings?show-reditus-referral=referrals`
-- `https://your-app.com/billing?show-reditus-referral=rewards`
+- `https://your-app.com/dashboard?reditus-show-referral=program`
+- `https://your-app.com/account/settings?reditus-show-referral=referrals`
+- `https://your-app.com/billing?reditus-show-referral=rewards`
 
 > ℹ️ The modal will open automatically after the widget is loaded and the user is authenticated.
