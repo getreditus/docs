@@ -134,7 +134,10 @@
             "type": "object",
             "properties": {
               "state": { "type": "string" },
-              "amount": { "type": "integer" },
+              "amount": {
+                "type": "integer",
+                "description": "Amount in cents (e.g., 1000 = $10.00)"
+              },
               "currency": { "type": "string" },
               "sub_id": { "type": "string" },
               "state_set_at": { "type": "integer" },
