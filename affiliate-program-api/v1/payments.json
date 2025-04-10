@@ -87,13 +87,17 @@
       "PaymentRequest": {
         "type": "object",
         "properties": {
+          "referral_uid": {
+            "type": "string",
+            "description": "**required** - Your internal ID of the referral/user"
+          },
           "referral_email": {
             "type": "string",
-            "description": "**required** if `referral_id` not set - Email of the referral"
+            "description": "**required** if `referral_id` / `referral_uid` not set - Email of the referral"
           },
           "referral_id": {
             "type": "string",
-            "description": "**required** if `referral_email` not set - Reditus id of the referral"
+            "description": "**required** if `referral_email` / `referral_uid` not set - Reditus id of the referral"
           },
           "amount": {
             "type": "integer",
