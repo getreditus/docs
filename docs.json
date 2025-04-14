@@ -99,6 +99,10 @@
             "pages": ["affiliate-program-api/v2/tracking/conversion"]
           },
           {
+            "group": "Refunds",
+            "pages": ["affiliate-program-api/v1/refunds/create"]
+          },
+          {
             "group": "Subscriptions",
             "pages": [
               "affiliate-program-api/v1/subscriptions/show",
@@ -106,7 +110,7 @@
             ]
           },
           {
-            "group": "Tracking V1 (Deprecated)",
+            "group": "Tracking V1 (Deprecating)",
             "pages": ["affiliate-program-api/v1/tracking/conversion"]
           }
         ]

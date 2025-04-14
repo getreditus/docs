@@ -1,0 +1,134 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Refunds",
+    "description": "API specification for managing refunds in Reditus.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/refunds": {
+      "post": {
+        "summary": "Refund a Payment",
+        "description": "Marks a commission as rejected based on a refunded payment. Requires a valid `payment_id`. Optionally accepts `payment_invoice`.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Commission was marked as refunded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Payment transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RefundRequest": {
+        "type": "object",
+        "required": ["payment_id"],
+        "properties": {
+          "payment_id": {
+            "type": "string",
+            "description": "**required** - The `object.id` of the `charge.succeeded` or `invoice.paid` Stripe event. For Payments API users, fill in the `idempotency_key` that you used to create the payment."
+          },
+          "payment_invoice": {
+            "type": "string",
+            "description": "**optional** - Only for `charge.succeeded` Stripe event, it is the `object.invoice` field. It is optional and used as a fallback is payment_id is not matched."
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Bad Request" },
+                "details": {
+                  "type": "string",
+                  "example": "Validation failed: payment_id can't be blank"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Not Found" },
+                "details": {
+                  "type": "string",
+                  "example": "Payment not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
