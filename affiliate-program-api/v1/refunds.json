@@ -14,7 +14,7 @@
     "/v1/refunds": {
       "post": {
         "summary": "Refund a Payment",
-        "description": "Marks a commission as rejected based on a refunded payment. Requires a valid `payment_id`. Optionally accepts `payment_invoice`.",
+        "description": "Marks a commission as rejected based on a refunded payment. Requires a valid `payment_id`.",
         "requestBody": {
           "required": true,
           "content": {
@@ -79,11 +79,7 @@
         "properties": {
           "payment_id": {
             "type": "string",
-            "description": "**required** - The `object.id` of the `charge.succeeded` or `invoice.paid` Stripe event. For Payments API users, fill in the `idempotency_key` that you used to create the payment."
-          },
-          "payment_invoice": {
-            "type": "string",
-            "description": "**optional** - Only for `charge.succeeded` Stripe event, it is the `object.invoice` field. It is optional and used as a fallback is payment_id is not matched."
+            "description": "**required** - For Payments API users: fill in the `idempotency_key` that you used to create the payment. For Stripe integrated users: fill in the `object.id` of the `charge.succeeded` or `invoice.paid` Stripe event."
           }
         }
       },
