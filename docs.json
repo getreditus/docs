@@ -141,6 +141,10 @@
             ]
           },
           {
+            "group": "Payments",
+            "pages": ["referral-program-api/v1/payments/create"]
+          },
+          {
             "group": "Rewards",
             "pages": ["referral-program-api/v1/rewards/index"]
           }
