@@ -14,7 +14,7 @@
     "/v1/payments": {
       "post": {
         "summary": "Referral Payment",
-        "description": "The payments API allows you to add payments for your referrals. If you want to track a one-off payment, just don't specify `subscription_id`, `interval` and `interval_count`.",
+        "description": "The payments API allows you to add payments for your referrals/leads. If you want to track a one-off payment, just don't specify `subscription_id`, `interval` and `interval_count`.",
         "requestBody": {
           "required": true,
           "content": {
@@ -93,11 +93,11 @@
           },
           "referral_email": {
             "type": "string",
-            "description": "**required** if `referral_id` / `referral_uid` not set - Email of the referral"
+            "description": "**required** if `referral_id` / `referral_uid` not set - Email of the referral/lead"
           },
           "referral_id": {
             "type": "string",
-            "description": "**required** if `referral_email` / `referral_uid` not set - Reditus id of the referral"
+            "description": "**required** if `referral_email` / `referral_uid` not set - Reditus id of the referral/lead"
           },
           "amount": {
             "type": "integer",
