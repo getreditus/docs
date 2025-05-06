@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Reditus API - Subscriptions",
-    "description": "API specification for managing subscriptions in Reditus.",
+    "title": "Reditus API - Subscriptions - (Deprecating)",
+    "description": "API specification for managing subscriptions in Reditus. (Deprecating)",
     "version": "1.0.0"
   },
   "servers": [
