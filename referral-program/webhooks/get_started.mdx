@@ -1,0 +1,124 @@
+---
+title: "Get Started"
+description: "Send events from Reditus to webhook endpoints"
+---
+
+### Beta
+
+Webhooks are still in beta, and in order to get your webhook secret and set your `redirect_url`, you need to contact us.
+
+### Security
+
+We send a `X-Signature` Header which contains the signed payload. It is recommended to compare the signed payload with the `X-Signature` we provide to make sure the request comes from us.
+
+### Client side example
+
+<CodeGroup>
+```ruby Ruby
+expected_signature = OpenSSL::HMAC.hexdigest("SHA256", webhook_secret, raw_body)
+
+if Rack::Utils.secure_compare(expected_signature, request.headers['X-Signature'])
+  # Valid
+else
+  # Reject
+end
+```
+
+```go Go
+import (
+  "crypto/hmac"
+  "crypto/sha256"
+  "encoding/hex"
+  "net/http"
+)
+
+func verifySignature(secret, rawBody string, r *http.Request) bool {
+  signature := r.Header.Get("X-Signature")
+  mac := hmac.New(sha256.New, []byte(secret))
+  mac.Write([]byte(rawBody))
+  expectedMAC := mac.Sum(nil)
+  expectedSignature := hex.EncodeToString(expectedMAC)
+
+  return hmac.Equal([]byte(signature), []byte(expectedSignature))
+}
+```
+
+```python Python
+import hmac
+import hashlib
+
+def verify_signature(secret, raw_body, signature):
+    expected_signature = hmac.new(
+        key=secret.encode(),
+        msg=raw_body.encode(),
+        digestmod=hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(expected_signature, signature)
+```
+```javascript Node.js
+const crypto = require('crypto');
+
+function verifySignature(secret, rawBody, req) {
+  const signature = req.headers['x-signature'];
+  const expectedSignature = crypto
+    .createHmac('sha256', secret)
+    .update(rawBody, 'utf8')
+    .digest('hex');
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature, 'utf8'),
+    Buffer.from(expectedSignature, 'utf8')
+  );
+}
+```
+
+```csharp .NET
+using System.Security.Cryptography;
+using System.Text;
+
+bool VerifySignature(string secret, string rawBody, string signature)
+{
+  using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+  var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(rawBody));
+  var expectedSignature = BitConverter.ToString(hash).Replace("-", "").ToLower();
+
+  return CryptographicOperations.FixedTimeEquals(
+    Encoding.UTF8.GetBytes(signature),
+    Encoding.UTF8.GetBytes(expectedSignature)
+  );
+}
+```
+
+```php PHP
+function verify_signature($secret, $raw_body, $signature) {
+  $expected_signature = hash_hmac('sha256', $raw_body, $secret);
+  return hash_equals($expected_signature, $signature);
+}
+```
+
+```java Java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+
+public boolean verifySignature(String secret, String rawBody, String signature) throws Exception {
+  Mac hmac = Mac.getInstance("HmacSHA256");
+  SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+  hmac.init(secretKey);
+  byte[] hash = hmac.doFinal(rawBody.getBytes(StandardCharsets.UTF_8));
+
+  String expectedSignature = bytesToHex(hash);
+  return MessageDigest.isEqual(signature.getBytes(), expectedSignature.getBytes());
+}
+
+private String bytesToHex(byte[] bytes) {
+  StringBuilder sb = new StringBuilder();
+  for (byte b : bytes) {
+    sb.append(String.format("%02x", b));
+  }
+  return sb.toString();
+}
+```
+</CodeGroup>
+
+More webhooks to be added, if you have any request, let us know.

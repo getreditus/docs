@@ -1,0 +1,26 @@
+---
+title: "reward.created"
+description: "Rewards - reward.created"
+---
+
+## Use Cases
+- Sending you a Slack message when a reward was generated in Reditus.
+- Generating a Stripe discount for the end user automatically.
+
+### Example payload
+
+```
+{
+  "event_type": "reward.created",
+  "url": "destination-url@example.com",
+  "created_at": "2024-05-05",
+  "data": {
+    "uid": "4321-cdsa-klnb-0912",
+    "amount": 5521 // $55.21,
+    "currency": "usd",
+    "lead_id": "6412-smga-1314-munw",
+    "custom_text": "Awesome Hoodie",
+    "reward_id": "9182-agja-1891-awia"
+  }
+}
+```
