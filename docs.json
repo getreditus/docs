@@ -50,6 +50,13 @@
                   "referral-program/authentication",
                   "referral-program/show"
                 ]
+              },
+              {
+                "group": "Webhooks",
+                "pages": [
+                  "referral-program/webhooks/get_started",
+                  "referral-program/webhooks/reward_created"
+                ]
               }
             ]
           }
