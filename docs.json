@@ -55,6 +55,7 @@
                 "group": "Webhooks",
                 "pages": [
                   "referral-program/webhooks/get_started",
+                  "referral-program/webhooks/lead_created",
                   "referral-program/webhooks/reward_created"
                 ]
               }

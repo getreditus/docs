@@ -1,0 +1,24 @@
+---
+title: "lead.created"
+description: "Leads - lead.created"
+---
+
+## Use Cases
+- Sending you a Slack message when a lead was created in Reditus.
+- Generating a Stripe discount for the end user automatically.
+
+### Example payload
+
+```
+{
+  "event_type": "lead.created",
+  "url": "destination-url@example.com",
+  "created_at": "2024-05-05",
+  "data": {
+    "advocate_uid": "your-user-advocate-id", // Your internal ID of the advocate
+    "lead_id": "6412-smga-1314-munw",
+    "lead_uid": "your-lead-uid", // Your internal ID of the lead
+    "lead_email": "john@example.com"
+  }
+}
+```
