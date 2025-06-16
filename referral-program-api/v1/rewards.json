@@ -82,6 +82,66 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/rewards/{id}": {
+      "put": {
+        "summary": "Mark Reward as Paid",
+        "description": "Set the reward's state to 'paid'",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Reward ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RewardUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reward updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid state: reward must be in 'pending' state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRewardNotPendingError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reward not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRewardNotFoundError"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -133,6 +193,53 @@
               "state": { "type": "string" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "RewardUpdateRequest": {
+        "type": "object",
+        "required": ["state"],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": ["paid"],
+            "description": "New state to set (currently only 'paid' is supported)"
+          }
+        }
+      },
+      "ErrorRewardNotPendingError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "type": "string",
+                  "example": "Reward must be in 'pending' state"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorRewardNotFoundError": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "type": "string",
+                  "example": "Reward not found"
+                }
+              }
             }
           }
         }

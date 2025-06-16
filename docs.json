@@ -154,7 +154,10 @@
           },
           {
             "group": "Rewards",
-            "pages": ["referral-program-api/v1/rewards/index"]
+            "pages": [
+              "referral-program-api/v1/rewards/index",
+              "referral-program-api/v1/rewards/update"
+            ]
           }
         ]
       },
