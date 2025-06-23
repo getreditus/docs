@@ -184,6 +184,7 @@
             "properties": {
               "id": { "type": "string" },
               "advocate_id": { "type": "string" },
+              "advocate_uid": { "type": "string" },
               "lead_id": { "type": "string" },
               "amount": {
                 "type": "integer",
