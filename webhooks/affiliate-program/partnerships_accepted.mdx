@@ -1,0 +1,24 @@
+---
+title: "partnerships.accepted"
+description: "Partnerships - partnerships.accepted"
+---
+
+## Use Cases
+- Sending you a Slack message when a partnership was accepted in Reditus.
+- Automatically sending a welcome email to the new affiliate.
+
+### Example payload
+
+```
+{
+  "event_type": "partnerships.accepted",
+  "url": "destination-url@example.com",
+  "created_at": "2024-05-05",
+  "data": {
+    "affiliate_email": "john@acme.com",
+    "affiliate_first_name": "John",
+    "affiliate_last_name": "Doe",
+    "accepted_at": "2024-05-05"
+  }
+}
+```
