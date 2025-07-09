@@ -36,6 +36,10 @@
                   "affiliate-program/signup-snippet/installation",
                   "affiliate-program/signup-snippet/advanced_installation"
                 ]
+              },
+              {
+                "group": "Stripe Integration",
+                "pages": ["affiliate-program/stripe/excluding_plans"]
               }
             ]
           },
@@ -51,7 +55,11 @@
                   "referral-program/show"
                 ]
               },
-              "referral-program/referral_rewards"
+              "referral-program/referral_rewards",
+              {
+                "group": "Stripe Integration",
+                "pages": ["referral-program/stripe/excluding_plans"]
+              }
             ]
           },
           {

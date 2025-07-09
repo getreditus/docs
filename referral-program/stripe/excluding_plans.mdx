@@ -1,0 +1,18 @@
+---
+title: "Excluding plans & prices"
+description: "Exclude certain plans from generating rewards"
+---
+
+<Info>
+    This is a Stripe only feature
+</Info>
+
+
+If you want to exclude a certain plan from generating rewards, you can do that.
+
+1. Go to Stripe -> Product catalogue -> Select the plan you want to exclude (i.e. "Growth plan")
+2. Select the price you want to exclude (if you want to exclude the whole plan, you have to do this for all prices in the plan).
+3. From the price page, go to "Edit metadata".
+4. Add the key "rewards_disabled", and for the value add "yes" (without the actual `""`).
+
+![tag3](/referral-program/stripe/assets/example.png)
