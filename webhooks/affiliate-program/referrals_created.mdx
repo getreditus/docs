@@ -1,0 +1,24 @@
+---
+title: "referral.created"
+description: "Referrals - referral.created"
+---
+
+## Use Cases
+- Sending you a Slack message when a referral was created in Reditus.
+- Generating a Stripe discount for the end user automatically.
+
+### Example payload
+
+```
+{
+  "event_type": "referral.created",
+  "url": "destination-url@example.com",
+  "created_at": "2024-05-05",
+  "data": {
+    "affiliate_email": "affiliate@example.com",
+    "referral_id": "6412-smga-1314-munw",
+    "referral_uid": "your-referral-uid", // Your internal ID of the referral
+    "referral_email": "john@example.com"
+  }
+}
+```

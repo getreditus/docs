@@ -68,7 +68,10 @@
               "webhooks/get_started",
               {
                 "group": "Affiliate Program",
-                "pages": ["webhooks/affiliate-program/partnerships_accepted"]
+                "pages": [
+                  "webhooks/affiliate-program/partnership_accepted",
+                  "webhooks/affiliate-program/referrals_created"
+                ]
               },
               {
                 "group": "Referral Program",
