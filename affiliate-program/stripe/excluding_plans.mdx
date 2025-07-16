@@ -11,8 +11,12 @@ description: "Exclude certain plans from generating commissions"
 If you want to exclude a certain plan from generating commissions, you can do that.
 
 1. Go to Stripe -> Product catalogue -> Select the plan you want to exclude (i.e. "Growth plan")
-2. Select the price you want to exclude (if you want to exclude the whole plan, you have to do this for all prices in the plan).
+2. Select the price you want to exclude.
 3. From the price page, go to "Edit metadata".
 4. Add the key "commissions_disabled", and for the value add "yes" (without the actual `""`).
 
 ![tag3](/affiliate-program/stripe/assets/example.png)
+
+<Info>
+    If you want to exclude all the prices in a plan, You can now add the metadata on Product level.
+</Info>
