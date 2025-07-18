@@ -92,6 +92,35 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/advocates/{id}": {
+      "get": {
+        "summary": "Get Advocate",
+        "description": "Retrieve details of a specific advocate by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Advocate found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvocateShowResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -122,6 +151,12 @@
         "type": "object",
         "properties": {
           "data": { "$ref": "#/components/schemas/Advocate" }
+        }
+      },
+      "AdvocateShowResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "$ref": "#/components/schemas/AdvocateShow" }
         }
       },
       "AdvocateRequest": {
@@ -172,6 +207,31 @@
               "company_id": { "type": "string" },
               "company": { "type": "string" },
               "created_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "AdvocateShow": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "uid": { "type": "string" },
+              "email": { "type": "string" },
+              "first_name": { "type": "string" },
+              "last_name": { "type": "string" },
+              "slug": { "type": "string" },
+              "referral_link": { "type": "string" },
+              "company_id": { "type": "string" },
+              "company": { "type": "string" },
+              "created_at": { "type": "integer" },
+              "leads_count": { "type": "integer" },
+              "paid_leads_count": { "type": "integer" },
+              "total_sold": { "type": "integer" }
             }
           }
         }

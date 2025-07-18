@@ -159,6 +159,7 @@
             "group": "Advocates",
             "pages": [
               "referral-program-api/v1/advocates/index",
+              "referral-program-api/v1/advocates/show",
               "referral-program-api/v1/advocates/create"
             ]
           },
