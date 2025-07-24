@@ -76,6 +76,7 @@
               {
                 "group": "Referral Program",
                 "pages": [
+                  "webhooks/referral-program/advocate_created",
                   "webhooks/referral-program/lead_created",
                   "webhooks/referral-program/reward_created"
                 ]

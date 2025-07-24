@@ -1,0 +1,29 @@
+---
+title: "advocate.created"
+description: "Advocates - advocate.created"
+---
+
+## Use Cases
+- Sending you a Slack message when a advocate was created in Reditus.
+- Sending an email to the advocate
+
+### Example payload
+
+```
+{
+  "event_type": "advocate.created",
+  "url": "destination-url@example.com",
+  "created_at": "2024-05-05",
+  "data": {
+    "advocate_uid": "your-user-advocate-id", // Your internal ID of the advocate
+    "advocate_id": "6412-smga-1314-munw",
+    "advocate_slug": "jwe512",
+    "advocate_referral_link": "https://acme.com/?refby=jwe512",
+    "advocate_first_name": "John",
+    "advocate_last_name": "Doe",
+    "advocate_email": "john@example.com",
+    "advocate_company": "Notion",
+    "advocate_company_id": "3124-wasg-cgde-7131"
+  }
+}
+```
