@@ -8,16 +8,6 @@ description: "Send events from Reditus to webhook endpoints"
 Integrating our webhooks allows your system to react instantly to key events — like when a new reward is generated — without the need to constantly poll our API. They are secure by design, as each webhook is signed, so you can confidently verify authenticity.
 
 
-### Beta
-
-Webhooks are still in beta. Please contact us if you want access.
-
-That way we can:
-
-1. Enable the webhooks for them.
-2. Add your webhook endpoint url that listens to Reditus events.
-3. Give you your webhook secret, to help you validate the event is coming from us.
-
 ### Security
 
 We send a `X-Signature` Header which contains the signed payload. It is recommended to compare the signed payload with the `X-Signature` we provide to make sure the request comes from us.
