@@ -249,5 +249,11 @@
         "method": "bearer"
       }
     }
+  },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_saNTl5SItpoThLtz9jLhHWKYQgZfjBkt66lv80eDt19",
+      "apiHost": "https://us.i.posthog.com"
+    }
   }
 }
