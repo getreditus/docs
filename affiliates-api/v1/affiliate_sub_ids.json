@@ -14,7 +14,7 @@
     "/v1/affiliate/sub_ids": {
       "get": {
         "summary": "List Sub IDs",
-        "description": "Retrieve a list of Sub IDs. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint.",
+        "description": "Retrieve a list of Sub IDs. This is an endpoint from the Affiliates API. You will need an affiliate account and its token in order to use this endpoint. Sub IDs are present in the affiliate links via the 'sid' query params.",
         "responses": {
           "200": {
             "description": "Successful response",
