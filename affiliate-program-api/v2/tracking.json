@@ -19,7 +19,9 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/TrackingV2Request" }
+              "schema": {
+                "$ref": "#/components/schemas/TrackingV2Request"
+              }
             }
           }
         },
@@ -28,7 +30,9 @@
             "description": "Successful conversion",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TrackingV2Response" }
+                "schema": {
+                  "$ref": "#/components/schemas/TrackingV2Response"
+                }
               }
             }
           },
@@ -65,7 +69,11 @@
             }
           }
         },
-        "security": [{ "BearerAuth": [] }]
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -76,7 +84,7 @@
         "properties": {
           "affiliate_slug": {
             "type": "string",
-            "description": "URL parameter of the affiliate (i.e. https://company.com?red=john -> john)"
+            "description": "URL parameter of the affiliate (i.e. https://company.com?red=john -> john). You can use a competitor slug as well."
           },
           "email": {
             "type": "string",
@@ -91,7 +99,9 @@
             "description": "Cookie set by the tracking script in the referral's browser. Used to match the exact click that converted."
           }
         },
-        "required": ["affiliate_slug"]
+        "required": [
+          "affiliate_slug"
+        ]
       },
       "TrackingV2Response": {
         "type": "object",
@@ -99,17 +109,33 @@
           "data": {
             "type": "object",
             "properties": {
-              "id": { "type": "string" },
-              "type": { "type": "string" },
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
               "attributes": {
                 "type": "object",
                 "properties": {
-                  "email": { "type": "string" },
-                  "uid": { "type": "string" },
-                  "state": { "type": "string" },
-                  "state_set_at": { "type": "integer" },
-                  "created_at": { "type": "integer" },
-                  "updated_at": { "type": "integer" }
+                  "email": {
+                    "type": "string"
+                  },
+                  "uid": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "state_set_at": {
+                    "type": "integer"
+                  },
+                  "created_at": {
+                    "type": "integer"
+                  },
+                  "updated_at": {
+                    "type": "integer"
+                  }
                 }
               }
             }
