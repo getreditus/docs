@@ -15,7 +15,9 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["get-started/introduction"]
+            "pages": [
+              "get-started/introduction"
+            ]
           },
           {
             "group": "Affiliate Program",
@@ -39,7 +41,9 @@
               },
               {
                 "group": "Stripe Integration",
-                "pages": ["affiliate-program/stripe/excluding_plans"]
+                "pages": [
+                  "affiliate-program/stripe/excluding_plans"
+                ]
               }
             ]
           },
@@ -58,7 +62,9 @@
               "referral-program/referral_rewards",
               {
                 "group": "Stripe Integration",
-                "pages": ["referral-program/stripe/excluding_plans"]
+                "pages": [
+                  "referral-program/stripe/excluding_plans"
+                ]
               }
             ]
           },
@@ -126,11 +132,15 @@
           },
           {
             "group": "Tracking V2",
-            "pages": ["affiliate-program-api/v2/tracking/conversion"]
+            "pages": [
+              "affiliate-program-api/v2/tracking/conversion"
+            ]
           },
           {
             "group": "Refunds",
-            "pages": ["affiliate-program-api/v1/refunds/create"]
+            "pages": [
+              "affiliate-program-api/v1/refunds/create"
+            ]
           },
           {
             "group": "Subscriptions",
@@ -141,7 +151,9 @@
           },
           {
             "group": "Tracking V1 (Deprecating)",
-            "pages": ["affiliate-program-api/v1/tracking/conversion"]
+            "pages": [
+              "affiliate-program-api/v1/tracking/conversion"
+            ]
           }
         ]
       },
@@ -173,13 +185,21 @@
           },
           {
             "group": "Payments",
-            "pages": ["referral-program-api/v1/payments/create"]
+            "pages": [
+              "referral-program-api/v1/payments/create"
+            ]
           },
           {
             "group": "Rewards",
             "pages": [
               "referral-program-api/v1/rewards/index",
               "referral-program-api/v1/rewards/update"
+            ]
+          },
+          {
+            "group": "Refunds",
+            "pages": [
+              "referral-program-api/v1/refunds/create"
             ]
           }
         ]
@@ -197,15 +217,21 @@
           },
           {
             "group": "Referrals",
-            "pages": ["affiliates-api/v1/affiliate_referrals/index"]
+            "pages": [
+              "affiliates-api/v1/affiliate_referrals/index"
+            ]
           },
           {
             "group": "Commissions",
-            "pages": ["affiliates-api/v1/affiliate_commissions/index"]
+            "pages": [
+              "affiliates-api/v1/affiliate_commissions/index"
+            ]
           },
           {
             "group": "Sub IDs",
-            "pages": ["affiliates-api/v1/affiliate_sub_ids/index"]
+            "pages": [
+              "affiliates-api/v1/affiliate_sub_ids/index"
+            ]
           }
         ]
       }
