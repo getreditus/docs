@@ -70,7 +70,11 @@
             }
           }
         },
-        "security": [{ "BearerAuth": [] }]
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/v1/partnerships/{id}": {
@@ -82,7 +86,10 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "description": "Partnership id" }
+            "schema": {
+              "type": "string",
+              "description": "Partnership id"
+            }
           }
         ],
         "responses": {
@@ -97,7 +104,11 @@
             }
           }
         },
-        "security": [{ "BearerAuth": [] }]
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -108,7 +119,9 @@
         "properties": {
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Partnership" }
+            "items": {
+              "$ref": "#/components/schemas/Partnership"
+            }
           },
           "meta": {
             "type": "object",
@@ -116,9 +129,15 @@
               "pagination": {
                 "type": "object",
                 "properties": {
-                  "page": { "type": "integer" },
-                  "per_page": { "type": "integer" },
-                  "has_more": { "type": "boolean" }
+                  "page": {
+                    "type": "integer"
+                  },
+                  "per_page": {
+                    "type": "integer"
+                  },
+                  "has_more": {
+                    "type": "boolean"
+                  }
                 }
               }
             }
@@ -128,23 +147,47 @@
       "PartnershipResponse": {
         "type": "object",
         "properties": {
-          "data": { "$ref": "#/components/schemas/Partnership" }
+          "data": {
+            "$ref": "#/components/schemas/Partnership"
+          }
         }
       },
       "Partnership": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
-          "type": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
           "attributes": {
             "type": "object",
             "properties": {
-              "state": { "type": "string" },
-              "created_by": { "type": "string" },
-              "state_set_at": { "type": "integer" },
-              "created_at": { "type": "integer" },
-              "updated_at": { "type": "integer" },
-              "referral_link": { "type": "string" }
+              "state": {
+                "type": "string"
+              },
+              "competitor_slugs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "state_set_at": {
+                "type": "integer"
+              },
+              "created_at": {
+                "type": "integer"
+              },
+              "updated_at": {
+                "type": "integer"
+              },
+              "referral_link": {
+                "type": "string"
+              }
             }
           },
           "relationships": {
@@ -156,8 +199,12 @@
                   "data": {
                     "type": "object",
                     "properties": {
-                      "id": { "type": "string" },
-                      "type": { "type": "string" }
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
