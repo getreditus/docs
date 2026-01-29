@@ -19,12 +19,18 @@
           {
             "name": "name_eq",
             "in": "query",
-            "schema": { "type": "string", "description": "Filter by name" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by name"
+            }
           },
           {
             "name": "email_eq",
             "in": "query",
-            "schema": { "type": "string", "description": "Filter by email" }
+            "schema": {
+              "type": "string",
+              "description": "Filter by email"
+            }
           },
           {
             "name": "paypal_email_eq",
@@ -37,7 +43,10 @@
           {
             "name": "page",
             "in": "query",
-            "schema": { "type": "integer", "description": "Page number" }
+            "schema": {
+              "type": "integer",
+              "description": "Page number"
+            }
           },
           {
             "name": "per_page",
@@ -61,7 +70,11 @@
             }
           }
         },
-        "security": [{ "BearerAuth": [] }]
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/v1/partners/{id}": {
@@ -73,7 +86,10 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "description": "Partner id or slug" }
+            "schema": {
+              "type": "string",
+              "description": "Partner id or slug"
+            }
           }
         ],
         "responses": {
@@ -88,7 +104,11 @@
             }
           }
         },
-        "security": [{ "BearerAuth": [] }]
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -99,7 +119,9 @@
         "properties": {
           "data": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Partner" }
+            "items": {
+              "$ref": "#/components/schemas/Partner"
+            }
           },
           "meta": {
             "type": "object",
@@ -107,9 +129,15 @@
               "pagination": {
                 "type": "object",
                 "properties": {
-                  "page": { "type": "integer" },
-                  "per_page": { "type": "integer" },
-                  "has_more": { "type": "boolean" }
+                  "page": {
+                    "type": "integer"
+                  },
+                  "per_page": {
+                    "type": "integer"
+                  },
+                  "has_more": {
+                    "type": "boolean"
+                  }
                 }
               }
             }
@@ -119,7 +147,9 @@
       "PartnerResponse": {
         "type": "object",
         "properties": {
-          "data": { "$ref": "#/components/schemas/Partner" }
+          "data": {
+            "$ref": "#/components/schemas/Partner"
+          }
         }
       },
       "Partner": {
@@ -128,14 +158,27 @@
           "id": {
             "type": "string"
           },
-          "type": { "type": "string" },
+          "type": {
+            "type": "string"
+          },
           "attributes": {
             "type": "object",
             "properties": {
-              "name": { "type": "string" },
-              "paypal_email": { "type": "string" },
-              "created_at": { "type": "integer" },
-              "updated_at": { "type": "integer" }
+              "name": {
+                "type": "string"
+              },
+              "paypal_email": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "created_at": {
+                "type": "integer"
+              },
+              "updated_at": {
+                "type": "integer"
+              }
             }
           }
         }
