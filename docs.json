@@ -190,6 +190,12 @@
             ]
           },
           {
+            "group": "Tracking V2",
+            "pages": [
+              "referral-program-api/v2/tracking/conversion"
+            ]
+          },
+          {
             "group": "Rewards",
             "pages": [
               "referral-program-api/v1/rewards/index",

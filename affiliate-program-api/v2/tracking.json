@@ -86,6 +86,10 @@
             "type": "string",
             "description": "URL parameter of the affiliate (i.e. https://company.com?red=john -> john). You can use a competitor slug as well."
           },
+          "advocate_slug": {
+            "type": "string",
+            "description": "**required** if affiliate_slug is not set - URL parameter of the advocate (i.e. https://company.com?refby=jwe512 -> jwe512)."
+          },
           "email": {
             "type": "string",
             "description": "**required** if uid is not set - Email of the referral"
