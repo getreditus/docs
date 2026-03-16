@@ -1,0 +1,136 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Reward Triggers",
+    "description": "API specification for retrieving reward triggers in Reditus referral programs.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/reward_triggers": {
+      "get": {
+        "summary": "List Reward Triggers",
+        "description": "Retrieve a paginated list of reward triggers configured for your referral program. Reward triggers define the conditions and amounts for rewarding advocates.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "description": "Page number" }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "description": "Records to be displayed per page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardTriggerListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RewardTriggerListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/RewardTrigger" }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "page": { "type": "integer" },
+                  "per_page": { "type": "integer" },
+                  "has_more": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "RewardTrigger": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "reward_amount": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Fixed reward amount in cents (e.g., 1000 = $10.00). Set for 'signup' and 'first_purchase' triggers."
+              },
+              "reward_percentage": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Reward percentage of the payment amount. Set for 'recurring_payment' triggers."
+              },
+              "on": {
+                "type": "string",
+                "enum": ["signup", "recurring_payment", "first_purchase"],
+                "description": "The event that triggers the reward."
+              },
+              "is_lifetime": {
+                "type": "boolean",
+                "description": "Whether the recurring reward is applied for the lifetime of the customer."
+              },
+              "ends_in_months": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Number of months after which the recurring reward ends. Only applicable when is_lifetime is false."
+              },
+              "is_custom": {
+                "type": "boolean",
+                "description": "Whether the reward trigger uses a custom reward definition."
+              },
+              "custom_text": {
+                "type": "string",
+                "nullable": true,
+                "description": "Custom reward description text. Only set when is_custom is true."
+              },
+              "created_at": {
+                "type": "integer",
+                "description": "Unix timestamp of when the reward trigger was created."
+              },
+              "updated_at": {
+                "type": "integer",
+                "description": "Unix timestamp of when the reward trigger was last updated."
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

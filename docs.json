@@ -203,6 +203,12 @@
             ]
           },
           {
+            "group": "Reward Triggers",
+            "pages": [
+              "referral-program-api/v1/reward_triggers/index"
+            ]
+          },
+          {
             "group": "Refunds",
             "pages": [
               "referral-program-api/v1/refunds/create"
