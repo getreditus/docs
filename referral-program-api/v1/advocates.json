@@ -96,14 +96,15 @@
     "/v1/advocates/{id}": {
       "get": {
         "summary": "Get Advocate",
-        "description": "Retrieve details of a specific advocate by ID",
+        "description": "Retrieve details of a specific advocate by their Reditus ID (UUID) or by their uid (your internal user ID).",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "description": "The advocate's Reditus ID (UUID) or your internal user ID (uid)"
             }
           }
         ],
