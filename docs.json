@@ -173,7 +173,9 @@
             "pages": [
               "referral-program-api/v1/advocates/index",
               "referral-program-api/v1/advocates/show",
-              "referral-program-api/v1/advocates/create"
+              "referral-program-api/v1/advocates/create",
+              "referral-program-api/v1/advocates/show_payment_method",
+              "referral-program-api/v1/advocates/create_payment_method"
             ]
           },
           {
