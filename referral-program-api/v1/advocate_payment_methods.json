@@ -1,0 +1,249 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Reditus API - Advocate Payment Methods",
+    "description": "API specification for managing advocate payment methods in Reditus referral programs.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.getreditus.com/api"
+    }
+  ],
+  "paths": {
+    "/v1/advocates/{advocate_id}/payment_method": {
+      "get": {
+        "summary": "Get Payment Method",
+        "description": "Retrieve the masked payment method for an advocate. The advocate can be looked up by their Reditus ID (UUID) or by their uid (your internal user ID). Returns anonymized payment details so you can show a \"connected\" state without exposing sensitive data.",
+        "parameters": [
+          {
+            "name": "advocate_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The advocate's Reditus ID (UUID) or your internal user ID (uid)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethodResponse"
+                },
+                "examples": {
+                  "paypal": {
+                    "summary": "PayPal payment method",
+                    "value": {
+                      "data": {
+                        "payment_type": "paypal",
+                        "masked_value": "jo****@gmail.com"
+                      }
+                    }
+                  },
+                  "iban": {
+                    "summary": "IBAN payment method",
+                    "value": {
+                      "data": {
+                        "payment_type": "iban",
+                        "masked_value": "DE****3000"
+                      }
+                    }
+                  },
+                  "none": {
+                    "summary": "No payment method set",
+                    "value": {
+                      "data": {
+                        "payment_type": null,
+                        "masked_value": null
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Advocate not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      },
+      "post": {
+        "summary": "Set Payment Method",
+        "description": "Set or update the payment method for an advocate. The advocate can be looked up by their Reditus ID (UUID) or by their uid (your internal user ID). When switching payment types, the previous payment data is automatically cleared. Use this endpoint to store sensitive payment information (IBAN, PayPal) in Reditus instead of your own systems.",
+        "parameters": [
+          {
+            "name": "advocate_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The advocate's Reditus ID (UUID) or your internal user ID (uid)"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethodRequest"
+              },
+              "examples": {
+                "paypal": {
+                  "summary": "Set PayPal payment method",
+                  "value": {
+                    "payment_type": "paypal",
+                    "paypal_email": "johndoe@gmail.com"
+                  }
+                },
+                "iban": {
+                  "summary": "Set IBAN payment method",
+                  "value": {
+                    "payment_type": "iban",
+                    "iban": "DE89370400440532013000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment method saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethodResponse"
+                },
+                "examples": {
+                  "paypal": {
+                    "summary": "PayPal saved",
+                    "value": {
+                      "data": {
+                        "payment_type": "paypal",
+                        "masked_value": "jo****@gmail.com"
+                      }
+                    }
+                  },
+                  "iban": {
+                    "summary": "IBAN saved",
+                    "value": {
+                      "data": {
+                        "payment_type": "iban",
+                        "masked_value": "DE****3000"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Invalid payment_type or missing required field.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Advocate not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentMethodResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "payment_type": {
+                "type": "string",
+                "nullable": true,
+                "enum": ["paypal", "iban", null],
+                "description": "The type of payment method configured, or null if none is set"
+              },
+              "masked_value": {
+                "type": "string",
+                "nullable": true,
+                "description": "The anonymized payment value (e.g., 'jo****@gmail.com' or 'DE****3000'), or null if none is set"
+              }
+            }
+          }
+        }
+      },
+      "PaymentMethodRequest": {
+        "type": "object",
+        "properties": {
+          "payment_type": {
+            "type": "string",
+            "enum": ["paypal", "iban"],
+            "description": "The type of payment method to set"
+          },
+          "paypal_email": {
+            "type": "string",
+            "description": "The PayPal email address. Required when payment_type is 'paypal'."
+          },
+          "iban": {
+            "type": "string",
+            "description": "The IBAN number. Required when payment_type is 'iban'."
+          }
+        },
+        "required": ["payment_type"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "details": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
