@@ -26,7 +26,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "description": "Filter by advocate ID"
+              "description": "Filter by advocate ID (UUID) or advocate UID"
             }
           },
           {
@@ -186,6 +186,7 @@
               "advocate_id": { "type": "string" },
               "advocate_uid": { "type": "string" },
               "lead_id": { "type": "string" },
+              "lead_email": { "type": "string" },
               "amount": {
                 "type": "integer",
                 "description": "Amount in cents (e.g., 1000 = $10.00)"
