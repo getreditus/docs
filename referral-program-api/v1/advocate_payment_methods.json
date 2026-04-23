@@ -40,7 +40,9 @@
                     "value": {
                       "data": {
                         "payment_type": "paypal",
-                        "masked_value": "jo****@gmail.com"
+                        "masked_value": "jo****@gmail.com",
+                        "first_name": "John",
+                        "last_name": "Doe"
                       }
                     }
                   },
@@ -49,7 +51,9 @@
                     "value": {
                       "data": {
                         "payment_type": "iban",
-                        "masked_value": "DE****3000"
+                        "masked_value": "DE****3000",
+                        "first_name": "John",
+                        "last_name": "Doe"
                       }
                     }
                   },
@@ -58,7 +62,9 @@
                     "value": {
                       "data": {
                         "payment_type": null,
-                        "masked_value": null
+                        "masked_value": null,
+                        "first_name": null,
+                        "last_name": null
                       }
                     }
                   }
@@ -105,14 +111,18 @@
                   "summary": "Set PayPal payment method",
                   "value": {
                     "payment_type": "paypal",
-                    "paypal_email": "johndoe@gmail.com"
+                    "paypal_email": "johndoe@gmail.com",
+                    "first_name": "John",
+                    "last_name": "Doe"
                   }
                 },
                 "iban": {
                   "summary": "Set IBAN payment method",
                   "value": {
                     "payment_type": "iban",
-                    "iban": "DE89370400440532013000"
+                    "iban": "DE89370400440532013000",
+                    "first_name": "John",
+                    "last_name": "Doe"
                   }
                 }
               }
@@ -133,7 +143,9 @@
                     "value": {
                       "data": {
                         "payment_type": "paypal",
-                        "masked_value": "jo****@gmail.com"
+                        "masked_value": "jo****@gmail.com",
+                        "first_name": "John",
+                        "last_name": "Doe"
                       }
                     }
                   },
@@ -142,7 +154,9 @@
                     "value": {
                       "data": {
                         "payment_type": "iban",
-                        "masked_value": "DE****3000"
+                        "masked_value": "DE****3000",
+                        "first_name": "John",
+                        "last_name": "Doe"
                       }
                     }
                   }
@@ -193,6 +207,16 @@
                 "type": "string",
                 "nullable": true,
                 "description": "The anonymized payment value (e.g., 'jo****@gmail.com' or 'DE****3000'), or null if none is set"
+              },
+              "first_name": {
+                "type": "string",
+                "nullable": true,
+                "description": "The advocate's first name, or null if not set"
+              },
+              "last_name": {
+                "type": "string",
+                "nullable": true,
+                "description": "The advocate's last name, or null if not set"
               }
             }
           }
@@ -213,6 +237,14 @@
           "iban": {
             "type": "string",
             "description": "The IBAN number. Required when payment_type is 'iban'."
+          },
+          "first_name": {
+            "type": "string",
+            "description": "The advocate's first name. Optional."
+          },
+          "last_name": {
+            "type": "string",
+            "description": "The advocate's last name. Optional."
           }
         },
         "required": ["payment_type"]
