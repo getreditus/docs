@@ -114,6 +114,65 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/referrals/churn": {
+      "post": {
+        "summary": "Churn Referral",
+        "description": "Marks a referral as churned, so it no longer counts as an active paying referral. Use this when a referral cancels their subscription. Identify the referral by your own `referral_uid`, the referral's `referral_email`, or the Reditus `referral_id` - the same identifiers you use when creating a payment. If the referral pays again afterwards, sending a new payment automatically reactivates it, so no history is lost.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChurnRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Referral was marked as churned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - No identifier provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Referral not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Referral cannot be churned from its current state (e.g. it never converted, or is already churned)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -159,6 +218,78 @@
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "ChurnRequest": {
+        "type": "object",
+        "description": "Provide at least one identifier. They are matched in order: `referral_uid`, then `referral_id`, then `referral_email`.",
+        "properties": {
+          "referral_uid": {
+            "type": "string",
+            "description": "**required** if `referral_id` / `referral_email` not set - Your internal ID of the referral/user"
+          },
+          "referral_email": {
+            "type": "string",
+            "description": "**required** if `referral_uid` / `referral_id` not set - Email of the referral"
+          },
+          "referral_id": {
+            "type": "string",
+            "description": "**required** if `referral_uid` / `referral_email` not set - Reditus id of the referral"
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Bad Request" },
+                "details": {
+                  "type": "string",
+                  "example": "Validation failed: one of referral_uid, referral_id or referral_email is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Not Found" },
+                "details": {
+                  "type": "string",
+                  "example": "Referral not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseUnprocessable": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Unprocessable entity" },
+                "details": {
+                  "type": "string",
+                  "example": "Referral in state 'clicked' cannot be churned"
+                }
+              }
             }
           }
         }
