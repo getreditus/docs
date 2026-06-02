@@ -120,7 +120,8 @@
             "group": "Referrals",
             "pages": [
               "affiliate-program-api/v1/referrals/index",
-              "affiliate-program-api/v1/referrals/show"
+              "affiliate-program-api/v1/referrals/show",
+              "affiliate-program-api/v1/referrals/churn"
             ]
           },
           {
