@@ -187,6 +187,13 @@
             ]
           },
           {
+            "group": "Commissions",
+            "pages": [
+              "referral-program-api/v1/commissions/index",
+              "referral-program-api/v1/commissions/show"
+            ]
+          },
+          {
             "group": "Payments",
             "pages": [
               "referral-program-api/v1/payments/create"
