@@ -125,6 +125,13 @@
             ]
           },
           {
+            "group": "Commissions",
+            "pages": [
+              "affiliate-program-api/v1/commissions/index",
+              "affiliate-program-api/v1/commissions/show"
+            ]
+          },
+          {
             "group": "Payments",
             "pages": [
               "affiliate-program-api/v1/payments/create",
@@ -184,13 +191,6 @@
             "pages": [
               "referral-program-api/v1/leads/index",
               "referral-program-api/v1/leads/show"
-            ]
-          },
-          {
-            "group": "Commissions",
-            "pages": [
-              "referral-program-api/v1/commissions/index",
-              "referral-program-api/v1/commissions/show"
             ]
           },
           {
