@@ -1,0 +1,67 @@
+---
+title: "Languages"
+description: "Display the Reditus referral program widget in your user's language."
+---
+
+The in-app referral widget can be displayed in several languages. By default the widget is shown in **English**. You can select a different language per user by passing the `lang` option when you load the widget.
+
+## Supported Languages
+
+| Code | Language               |
+| ---- | ---------------------- |
+| `en` | English (default)      |
+| `fr` | French                 |
+| `es` | Spanish                |
+| `de` | German                 |
+| `pt` | Portuguese             |
+| `it` | Italian                |
+| `pl` | Polish                 |
+
+## Setting the Language
+
+Pass the `lang` option to `gr("loadReferralWidget", ...)` with one of the supported codes:
+
+```javascript Javascript
+window.gr("loadReferralWidget", {
+  product_id: PRODUCT_ID,
+  auth_token: authToken,
+  lang: "de", // Display the widget in German
+  user_details: {
+    email: "john@example.com",
+    first_name: "John",
+    last_name: "Doe",
+    company_id: "1as2-3df4-5fg6-7hj8",
+    company_name: "Acme",
+  },
+});
+```
+
+Set `lang` to the language your user has selected in your application. If you load the widget again with a different `lang`, the new language takes effect the next time the widget is shown.
+
+## How It Works
+
+- **English is the default.** If you omit `lang`, or pass a value that is not supported, the widget falls back to English.
+- **Region variants are accepted.** Values such as `fr-CA` or `pt-BR` are matched to their base language (`fr`, `pt`). If the base language is not supported, the widget falls back to English.
+- **English is always available instantly.** English ships with the widget. The other languages are loaded on demand the first time they are needed, so there is no extra cost for users on the default language.
+- **Safe fallback.** If a translation cannot be loaded for any reason, the widget continues to work and shows English instead.
+
+## What Gets Translated
+
+The `lang` option translates the widget's own interface: tab names, buttons, labels, instructions, and status messages.
+
+Content that comes from your Reditus configuration is shown as you entered it, and is **not** translated automatically. This includes:
+
+- Your referral program name.
+- Custom reward descriptions.
+- Your Terms and Conditions.
+- Monetary amounts and currencies.
+
+<Note>
+  If you need this configured content in another language, set it in the
+  language you want your users to see in your Reditus referral program
+  settings.
+</Note>
+
+## Next steps
+
+Continue to [Authenticating the User](./authentication) to learn how to generate the `auth_token` (JWT), or [Showing the Widget Modal](./show) to display the referral interface.

@@ -19,6 +19,7 @@ const authToken = await fetchAuthToken();
 window.gr("loadReferralWidget", {
   product_id: PRODUCT_ID,
   auth_token: authToken,
+  lang: "fr", // Optional. Defaults to English. See "Languages".
   user_details: {
     email: "john@example.com",
     first_name: "John",
@@ -35,6 +36,7 @@ window.gr("loadReferralWidget", {
 | --------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `product_id`                | string | **Required.** The Product ID from your Reditus configuration, available at [app.getreditus.com/saas/referral_program/config/authentication](https://app.getreditus.com/saas/referral_program/config/authentication). |
 | `auth_token`                | string | **Required.** A JSON Web Token (JWT) generated on your server using your Reditus **product secret**. Refer to [Authenticating the User](./authentication) for details on token creation.                             |
+| `lang`                      | string | **Optional.** The display language for the widget interface. Defaults to `en` (English). Supported values: `en`, `fr`, `es`, `de`, `pt`, `it`, `pl`. See [Languages](./languages) for details.                       |
 | `user_details`              | object | **Required to send at least one field within.** Contains user information to associate referral program data with a specific user. (See breakdown of nested fields below.)                                           |
 | `user_details.first_name`   | string | The user's first name.                                                                                                                                                                                               |
 | `user_details.last_name`    | string | The user's last name.                                                                                                                                                                                                |

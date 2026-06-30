@@ -56,7 +56,8 @@
                 "pages": [
                   "referral-program/loading",
                   "referral-program/authentication",
-                  "referral-program/show"
+                  "referral-program/show",
+                  "referral-program/languages"
                 ]
               },
               "referral-program/referral_rewards",
