@@ -129,7 +129,9 @@
             "group": "Commissions",
             "pages": [
               "affiliate-program-api/v1/commissions/index",
-              "affiliate-program-api/v1/commissions/show"
+              "affiliate-program-api/v1/commissions/show",
+              "affiliate-program-api/v1/commissions/reject",
+              "affiliate-program-api/v1/commissions/unreject"
             ]
           },
           {
@@ -191,7 +193,9 @@
             "group": "Leads",
             "pages": [
               "referral-program-api/v1/leads/index",
-              "referral-program-api/v1/leads/show"
+              "referral-program-api/v1/leads/show",
+              "referral-program-api/v1/leads/reject",
+              "referral-program-api/v1/leads/unreject"
             ]
           },
           {

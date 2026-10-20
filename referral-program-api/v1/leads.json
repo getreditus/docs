@@ -122,6 +122,122 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/leads/{id}/reject": {
+      "post": {
+        "summary": "Reject Lead",
+        "description": "Rejects a lead so it no longer counts towards the advocate's referrals, and rejects any `pending` rewards earned from it. Use this when a lead turns out to be invalid, for example a self-referral or a fraudulent signup. A `reject_reason` is required; it is stored on the lead and returned in the `reject_reason` attribute while the lead is rejected. Only `converted`, `paid` and `churned` leads can be rejected. Rewards that were already paid out are left untouched. A rejected lead can be restored with the unreject endpoint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the lead"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectLeadRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Lead was rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - No reject_reason provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Lead not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Lead cannot be rejected from its current state (it never converted, or is already rejected)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/leads/{id}/unreject": {
+      "post": {
+        "summary": "Unreject Lead",
+        "description": "Restores a `rejected` lead to the state it was in before it was rejected (`converted`, `paid` or `churned`), and moves any rewards that were rejected along with it back to `pending`. Use this to undo a rejection made by mistake. The stored `reject_reason` is cleared. Only `rejected` leads can be unrejected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the lead"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lead was restored to its previous state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Lead not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Lead is not rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -165,10 +281,82 @@
               "email": { "type": "string" },
               "uid": { "type": "string" },
               "advocate_id": { "type": "string" },
-              "state": { "type": "string" },
+              "state": {
+                "type": "string",
+                "description": "Lead state: new, clicked, converted, paid, churned or rejected"
+              },
+              "reject_reason": {
+                "type": "string",
+                "description": "Reason the lead was rejected. Only present when state is rejected"
+              },
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "RejectLeadRequest": {
+        "type": "object",
+        "required": ["reject_reason"],
+        "properties": {
+          "reject_reason": {
+            "type": "string",
+            "description": "**required** - Free-text reason for rejecting the lead. Shown to your team in the Reditus dashboard and returned in the lead's `reject_reason` attribute.",
+            "example": "Self referral"
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Bad Request" },
+                "details": {
+                  "type": "string",
+                  "example": "reject_reason is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Not Found" },
+                "details": {
+                  "type": "string",
+                  "example": "Lead not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseUnprocessable": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Unprocessable entity" },
+                "details": {
+                  "type": "string",
+                  "example": "Lead in state 'clicked' cannot be rejected"
+                }
+              }
             }
           }
         }

@@ -120,6 +120,112 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/commissions/{id}/reject": {
+      "post": {
+        "summary": "Reject Commission",
+        "description": "Rejects a `pending` commission so it will not be paid out to the affiliate. Use this when a commission should not have been earned, for example because the referral turned out to be fraudulent or the purchase was cancelled. You can optionally pass a `reject_reason`, which is stored on the commission and returned in the `reject_reason` attribute while the commission is rejected. Only `pending` commissions can be rejected; `paid` commissions cannot be reverted through the API. A rejected commission can be moved back to `pending` with the unreject endpoint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the commission"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectCommissionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Commission was rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommissionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Commission not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Commission cannot be rejected from its current state (it is already rejected, or has been paid)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/commissions/{id}/unreject": {
+      "post": {
+        "summary": "Unreject Commission",
+        "description": "Moves a `rejected` commission back to `pending`, so it becomes payable to the affiliate again. Use this to undo a rejection made by mistake. The previously stored `reject_reason` is no longer returned once the commission is pending. Only `rejected` commissions can be unrejected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the commission"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Commission was moved back to pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommissionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Commission not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Commission cannot be unrejected from its current state (it is pending or has been paid)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -191,6 +297,52 @@
               },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "RejectCommissionRequest": {
+        "type": "object",
+        "properties": {
+          "reject_reason": {
+            "type": "string",
+            "description": "Optional free-text reason for rejecting the commission. Shown to your team in the Reditus dashboard and returned in the commission's `reject_reason` attribute.",
+            "example": "Fraudulent referral"
+          }
+        }
+      },
+      "ErrorResponseNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Not Found" },
+                "details": {
+                  "type": "string",
+                  "example": "Commission not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseUnprocessable": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Unprocessable entity" },
+                "details": {
+                  "type": "string",
+                  "example": "Commission in state 'paid' cannot be rejected"
+                }
+              }
             }
           }
         }
