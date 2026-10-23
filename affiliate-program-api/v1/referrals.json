@@ -173,6 +173,122 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/referrals/{id}/reject": {
+      "post": {
+        "summary": "Reject Referral",
+        "description": "Rejects a referral so it no longer counts towards the affiliate's results, and rejects any `pending` commissions earned from it. Use this when a referral turns out to be invalid, for example a self-referral or a fraudulent signup. A `reject_reason` is required; it is stored on the referral and returned in the `reject_reason` attribute while the referral is rejected. Only `converted`, `paid` and `churned` referrals can be rejected. Commissions that were already paid out are left untouched. A rejected referral can be restored with the unreject endpoint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the referral"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectReferralRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Referral was rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - No reject_reason provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Referral not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Referral cannot be rejected from its current state (it never converted, or is already rejected)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/referrals/{id}/unreject": {
+      "post": {
+        "summary": "Unreject Referral",
+        "description": "Restores a `rejected` referral to the state it was in before it was rejected (`converted`, `paid` or `churned`), and moves any commissions that were rejected along with it back to `pending`. Use this to undo a rejection made by mistake. The stored `reject_reason` is cleared. Only `rejected` referrals can be unrejected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reditus id of the referral"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Referral was restored to its previous state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReferralResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Referral not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Referral is not rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -214,7 +330,14 @@
             "type": "object",
             "properties": {
               "email": { "type": "string" },
-              "state": { "type": "string" },
+              "state": {
+                "type": "string",
+                "description": "Referral state: new, clicked, converted, paid, churned or rejected"
+              },
+              "reject_reason": {
+                "type": "string",
+                "description": "Reason the referral was rejected. Only present when state is rejected"
+              },
               "state_set_at": { "type": "integer" },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
@@ -237,6 +360,17 @@
           "referral_id": {
             "type": "string",
             "description": "**required** if `referral_uid` / `referral_email` not set - Reditus id of the referral"
+          }
+        }
+      },
+      "RejectReferralRequest": {
+        "type": "object",
+        "required": ["reject_reason"],
+        "properties": {
+          "reject_reason": {
+            "type": "string",
+            "description": "**required** - Free-text reason for rejecting the referral. Shown to your team in the Reditus dashboard and returned in the referral's `reject_reason` attribute.",
+            "example": "Self referral"
           }
         }
       },

@@ -92,6 +92,53 @@
           }
         },
         "security": [{ "BearerAuth": [] }]
+      },
+      "post": {
+        "summary": "Create One-off Commission",
+        "description": "Creates a one-off commission for a partner that is not tied to a referral or a campaign. Use this for bonuses, manual corrections or any commission you want to award outside of the automatic tracking. The `amount` is in cents and in your account's preferred currency; it is converted to the partner's preferred currency for payout. The partner must have an accepted partnership with your program. The commission is created as `pending` unless you pass `state: paid`, in which case it is recorded as already paid out. The optional `one_off_reason` is shown to your team in the Reditus dashboard and returned in the `one_off_reason` attribute.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommissionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Commission was created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommissionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Missing or invalid partner_id, amount or state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Partner not found or partnership is not accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
       }
     },
     "/v1/commissions/{id}": {
@@ -290,6 +337,10 @@
                 "type": "string",
                 "description": "Reason the commission was rejected. Only present when state is rejected"
               },
+              "one_off_reason": {
+                "type": "string",
+                "description": "Reason given when the commission was created as a one-off. Only present for one-off commissions created with a reason"
+              },
               "state_set_at": { "type": "integer" },
               "paid_at": {
                 "type": "integer",
@@ -297,6 +348,51 @@
               },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "CreateCommissionRequest": {
+        "type": "object",
+        "required": ["partner_id", "amount"],
+        "properties": {
+          "partner_id": {
+            "type": "string",
+            "description": "**required** - Reditus id of the partner receiving the commission. The partner must have an accepted partnership with your program.",
+            "example": "5f4b1c2e-9b7a-4e3d-8c1a-2b3c4d5e6f70"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "**required** - Commission amount in cents, in your account's preferred currency (e.g. 1400 = $14.00). Must be a positive integer.",
+            "example": 1400
+          },
+          "state": {
+            "type": "string",
+            "enum": ["pending", "paid"],
+            "default": "pending",
+            "description": "State to create the commission in. Use `paid` when the commission was already paid out to the partner outside of Reditus."
+          },
+          "one_off_reason": {
+            "type": "string",
+            "description": "Optional free-text reason for the one-off commission, e.g. a bonus or a manual correction.",
+            "example": "Q3 bonus"
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Bad Request" },
+                "details": {
+                  "type": "string",
+                  "example": "Validation failed: Amount must be greater than 0"
+                }
+              }
             }
           }
         }
@@ -322,7 +418,7 @@
                 "title": { "type": "string", "example": "Not Found" },
                 "details": {
                   "type": "string",
-                  "example": "Commission not found"
+                  "example": "Commission not found, or partner not found or partnership is not accepted"
                 }
               }
             }
