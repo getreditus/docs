@@ -142,6 +142,112 @@
         },
         "security": [{ "BearerAuth": [] }]
       }
+    },
+    "/v1/rewards/{id}/reject": {
+      "post": {
+        "summary": "Reject Reward",
+        "description": "Rejects a `pending` reward so it will not be paid out to the advocate. Use this when a reward should not have been earned, for example because the lead turned out to be a duplicate or a self-referral. You can optionally pass a `reject_reason`, which is stored on the reward and returned in the `reject_reason` attribute while the reward is rejected. Only `pending` rewards can be rejected; `paid` rewards cannot be reverted through the API. A rejected reward can be moved back to `pending` with the unreject endpoint.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reward ID"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectRewardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reward was rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Reward not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRewardNotFoundError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Reward cannot be rejected from its current state (it is already rejected, or has been paid)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
+    },
+    "/v1/rewards/{id}/unreject": {
+      "post": {
+        "summary": "Unreject Reward",
+        "description": "Moves a `rejected` reward back to `pending`, so it becomes payable to the advocate again. Use this to undo a rejection made by mistake. The stored `reject_reason` is cleared. Only `rejected` rewards can be unrejected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Reward ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reward was moved back to pending",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Reward not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRewardNotFoundError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Reward cannot be unrejected from its current state (it is pending or has been paid)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "BearerAuth": [] }]
+      }
     }
   },
   "components": {
@@ -192,7 +298,14 @@
                 "description": "Amount in cents (e.g., 1000 = $10.00)"
               },
               "currency": { "type": "string" },
-              "state": { "type": "string" },
+              "state": {
+                "type": "string",
+                "description": "Reward state: pending, rejected or paid"
+              },
+              "reject_reason": {
+                "type": "string",
+                "description": "Reason the reward was rejected. Only present when state is rejected"
+              },
               "created_at": { "type": "integer" },
               "updated_at": { "type": "integer" }
             }
@@ -240,6 +353,34 @@
                 "details": {
                   "type": "string",
                   "example": "Reward not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RejectRewardRequest": {
+        "type": "object",
+        "properties": {
+          "reject_reason": {
+            "type": "string",
+            "description": "Optional free-text reason for rejecting the reward. Shown to your team in the Reditus dashboard and returned in the reward's `reject_reason` attribute.",
+            "example": "Duplicate signup"
+          }
+        }
+      },
+      "ErrorResponseUnprocessable": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string", "example": "Unprocessable entity" },
+                "details": {
+                  "type": "string",
+                  "example": "Reward in state 'paid' cannot be rejected"
                 }
               }
             }
