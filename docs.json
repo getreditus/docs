@@ -114,7 +114,9 @@
             "group": "Partnerships",
             "pages": [
               "affiliate-program-api/v1/partnerships/index",
-              "affiliate-program-api/v1/partnerships/show"
+              "affiliate-program-api/v1/partnerships/show",
+              "affiliate-program-api/v1/partnerships/accept",
+              "affiliate-program-api/v1/partnerships/terminate"
             ]
           },
           {

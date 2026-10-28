@@ -110,6 +110,134 @@
           }
         ]
       }
+    },
+    "/v1/partnerships/{id}/accept": {
+      "post": {
+        "summary": "Accept Partnership",
+        "description": "Accepts a `pending` affiliate request, so the partner joins your program and can start referring. This triggers the same notifications as accepting the request in the Reditus dashboard: the partner receives your welcome email (or your custom partnership-started emails, if enabled) and your configured Slack, HubSpot and webhook integrations are notified. Only `pending` partnerships can be accepted; declined or terminated ones cannot be accepted through the API.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Reditus id of the partnership"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Partnership was accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartnershipResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Partnership not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Partnership cannot be accepted from its current state (it is already accepted, declined or terminated)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/partnerships/{id}/terminate": {
+      "post": {
+        "summary": "Terminate Partnership",
+        "description": "Ends a partnership for good. The partner is removed from your program, loses access to their referral link and is notified by email. A `termination_reason` is required; it is stored on the partnership and returned in the `termination_reason` attribute. Any `pending`, `accepted` or `declined` partnership can be terminated. Termination cannot be undone through the API, so use the decline flow in the dashboard if you only want to turn down a request.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Reditus id of the partnership"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TerminatePartnershipRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Partnership was terminated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartnershipResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - No termination_reason provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Partnership not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseNotFound"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable - Partnership is already terminated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseUnprocessable"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -165,7 +293,12 @@
             "type": "object",
             "properties": {
               "state": {
-                "type": "string"
+                "type": "string",
+                "description": "Partnership state: pending, accepted, declined or terminated"
+              },
+              "termination_reason": {
+                "type": "string",
+                "description": "Reason the partnership was terminated. Only present when state is terminated"
               },
               "competitor_slugs": {
                 "type": "array",
@@ -207,6 +340,80 @@
                       }
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "TerminatePartnershipRequest": {
+        "type": "object",
+        "required": ["termination_reason"],
+        "properties": {
+          "termination_reason": {
+            "type": "string",
+            "description": "**required** - Free-text reason for ending the partnership. Kept on the partnership for your team's records and returned in the `termination_reason` attribute.",
+            "example": "Partner violated the program terms"
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Bad Request"
+                },
+                "details": {
+                  "type": "string",
+                  "example": "termination_reason is required"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseNotFound": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Not Found"
+                },
+                "details": {
+                  "type": "string",
+                  "example": "Partnership not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponseUnprocessable": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Unprocessable entity"
+                },
+                "details": {
+                  "type": "string",
+                  "example": "Partnership in state 'accepted' cannot be accepted"
                 }
               }
             }
